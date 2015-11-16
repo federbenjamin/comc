@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	.body
+		h1.title Sign Up
+		form#signup.form-horizontal(role="form", action="/users/register", method="post")
+			#email-form.form-group
+				label.control-label.col-sm-3(for="email") Email:
+				.col-sm-8
+					input#email.form-control(type="email", placeholder="Enter Email", name="email")
+			.form-group
+				label.control-label.col-sm-3(for="pwd") Password:
+				.col-sm-8
+					input#pwd.form-control(type="password", placeholder="Enter Password", name="password")
+			if matching
+				.form-group
+					label.control-label.col-sm-3(for="pwd") Confirm Password:
+					.col-sm-8
+						input#pwd.form-control(type="password", placeholder="Repeat Password", name="repeatPassword")
+			else
+				.form-group.has-error
+					label#confirm-pass.control-label.col-sm-3(for="pwd") Confirm Password:
+					.col-sm-8
+						label.control-label(for="pwd") Password Doesnt Match
+						input#pwd.form-control(type="password", placeholder="Repeat Password", name="repeatPassword")
+			button.btn.btn-default.col-sm-offset-10(type="submit") Register

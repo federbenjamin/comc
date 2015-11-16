@@ -1,0 +1,40 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.body {
+	margin-top: 80px;
+	padding: 50px;
+}
+.title {
+	padding-bottom: 20px;
+	text-align: center;
+}
+.center {
+	margin-top: 20px;
+}
+#not-member {
+	margin-top: 8px;
+}
+.shaded-box {
+	background-color: gray;
+	height: 70px;
+}
+.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+	height: 80px;
+}
+.navbar-brand {
+	display: block;
+	margin-top: -15px;
+}
+#confirm-pass {
+	margin-top: 25px !important;
+}

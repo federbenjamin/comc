@@ -1,0 +1,32 @@
+extends layout
+
+block content
+	.body
+		if login
+			p LOGGED IN
+		else
+			.row
+				.col-sm-6
+					h1.title Login
+				div.shaded-box.col-sm-4
+					.col-sm-7
+						h3#not-member Not a Member?
+					.col-sm-2
+						a.btn.btn-default.center(href="/signup", role="button") Sign Up
+			form#login.form-horizontal(role="form", action="/users/login", method="post")
+				#email-form.form-group
+					label.control-label.col-sm-2(for="email") Email:
+					.col-sm-9
+						input#email.form-control(type="email", placeholder="Enter Email", name="email")
+				if matching
+					.form-group
+						label.control-label.col-sm-2(for="pwd") Password:
+						.col-sm-9
+							input#pwd.form-control(type="password", placeholder="Enter Password", name="password")
+				else
+					.form-group.has-error
+						label#confirm-pass.control-label.col-sm-2(for="pwd") Password:
+						.col-sm-9
+							label.control-label(for="pwd") Password Incorrect
+							input#pwd.form-control(type="password", placeholder="Enter Password", name="password")
+				button.btn.btn-default.col-sm-offset-10(type="submit") Log In
