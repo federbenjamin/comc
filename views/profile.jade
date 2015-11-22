@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	.body
+		.col-sm-4
+			.form-group
+				h1.title 
+					= " " + user
+		.col-sm-9
+			div.slide-right
+				div.float-left
+					img(src = image, height = "80", weight = "80")
+				div
+					p
+						| Email: 
+						= " " + email
+					p
+						| Display Name:
+						= " " + name
+					p
+						| Description:
+						= " " + description
+			div.slide-right
+				h4 My Comics
+				button(disabled=disable)
+					= comic + " " + rented
