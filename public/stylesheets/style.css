@@ -38,3 +38,12 @@ a {
 #confirm-pass {
 	margin-top: 25px !important;
 }
+
+.float-left {
+    float: left;
+    padding-right: 20px;
+}
+
+.slide-right {
+    padding-left: 110px;
+}
