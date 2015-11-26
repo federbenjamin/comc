@@ -14,4 +14,21 @@ router.get('/profile', function(req, res, next) {
 						   });
 });
 
+router.get('/edit', function(req, res, next) {
+	res.render('edit');
+});
+
+router.post('/updateprofile', function(req, res, next) {
+	console.log(req.body);
+});
+
+router.post('/updatepwd', function(req, res, next) {
+	console.log(req.body);
+});
+
+router.post('/upload', function(req, res, next) {
+	console.log(req.files);
+	//res.render('edit', {image: req.body.profilePic})
+});
+
 module.exports = router;
