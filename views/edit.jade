@@ -1,0 +1,40 @@
+extends layout
+
+block content
+	.body
+		.col-sm-6
+			h1.title.inline.slide-right
+				= "Edit Profile"
+			form.slide-right(action="/profile/upload", method="post", enctype="multipart/form-data")
+				label.control-label Change Profile Picture
+				</br>
+				</br>
+				input(type="file", name="profilePic")
+				img(src = profilePic, height = "80", weight = "80")
+				input(type="submit")
+				</br>
+				</br>
+			form.slide-right(name="editProfile", action="/profile/updateprofile", method="post")
+				label.control-label Email: 
+				input.form-control(type="text", name="email")
+				</br>
+				label.control-label Display Name: 
+				input.form-control(type="text", name="displayName")
+				</br>
+				label.control-label Description: 
+				input.form-control(type="text", name="description")
+				</br>
+				input.btn.btn-default.col-sm-offset-10(type="submit" value="Update")
+				</br>
+				</br>
+			form.slide-right(name="changePassword", action="/profile/updatepwd", method="post")
+				label.control-label Old Password:
+				input.form-control(type="text", name="password")
+				</br>
+				label.control-label New Password:
+				input.form-control(type="text", name="newPassword")
+				</br>
+				label.control-label Confirm Password:
+				input.form-control(type="text", name="confirmPassword")
+				</br>
+				input.btn.btn-default.col-sm-offset-10(type="submit" value="Update")
