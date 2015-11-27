@@ -5,13 +5,13 @@ block content
 		.col-sm-6
 			h1.title.inline.slide-right
 				= "Edit Profile"
-			form.slide-right(action="/profile/upload", method="post", enctype="multipart/form-data")
+			form.slide-right(method="post", action="/profile/upload", enctype="multipart/form-data")
 				label.control-label Change Profile Picture
 				</br>
 				</br>
 				input(type="file", name="profilePic")
-				img(src = profilePic, height = "80", weight = "80")
-				input(type="submit")
+				</br>
+				input.btn.btn-default.col-sm-offset-10(type="submit")
 				</br>
 				</br>
 			form.slide-right(name="editProfile", action="/profile/updateprofile", method="post")
