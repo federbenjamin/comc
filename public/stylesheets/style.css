@@ -14,7 +14,7 @@ a {
 	padding-bottom: 20px;
 	text-align: center;
 }
-.center {
+.center{
 	margin-top: 20px;
 }
 #not-member {
@@ -33,12 +33,12 @@ a {
 }
 .navbar-brand {
 	display: block;
+	padding-top:0;
 	margin-top: -15px;
 }
 #confirm-pass {
 	margin-top: 25px !important;
 }
-
 .float-left {
     float: left;
     padding-right: 20px;
@@ -46,4 +46,11 @@ a {
 
 .slide-right {
     padding-left: 110px;
+}
+.loginbutton, .facebookbutton{
+	width: 200px;
+	display: block;
+}
+.margined{
+	margin: 10px;
 }

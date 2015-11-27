@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+var passport = require('passport');
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var profile = require('./routes/profile');
@@ -26,6 +28,9 @@ app.use(session({
   secret: 'keyboard cat',
   cookie: { maxAge: 60000 }
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
@@ -61,6 +66,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

@@ -8,9 +8,12 @@ router.get('/', function(req, res, next) {
 	var sess = req.session;
 	if (sess.login) {
 		username = sess.login;
+		console.log(sess.login);
+		res.render('homepage', { title: 'CURD App', matching: true, login: username});
 	}
-	console.log(sess.login);
-	res.render('index', { title: 'CURD App', matching: true, login: username });
+	else{
+		res.render('index', { title: 'CURD App', matching: true, login: username});
+	}
 });
 
 router.get('/signup', function(req, res, next) {
