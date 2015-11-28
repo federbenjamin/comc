@@ -12,12 +12,12 @@ router.get('/', function(req, res, next) {
 		res.render('homepage', { title: 'CURD App', matching: true, login: username});
 	}
 	else{
-		res.render('index', { title: 'CURD App', matching: true, login: username});
+		res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: true, userexists: true, matching: true, login: username});
 	}
 });
 
 router.get('/signup', function(req, res, next) {
-	res.render('signup', { title: 'CURD App', matching: true });
+	res.render('signup', { title: 'CURD App', matching: true, emailnotempty:true, passnotempty:true});
 });
 
 module.exports = router;

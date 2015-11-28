@@ -4,14 +4,28 @@ block content
 	.body
 		h1.title Sign Up
 		form#signup.form-horizontal(role="form", action="/users/register", method="post")
-			#email-form.form-group
-				label.control-label.col-sm-3(for="email") Email:
-				.col-sm-8
-					input#email.form-control(type="email", placeholder="Enter Email", name="email")
-			.form-group
-				label.control-label.col-sm-3(for="pwd") Password:
-				.col-sm-8
-					input#pwd.form-control(type="password", placeholder="Enter Password", name="password")
+			if emailnotempty
+				#email-form.form-group
+					label.control-label.col-sm-3(for="email") Email:
+					.col-sm-8
+						input#email.form-control(type="email", placeholder="Enter Email", name="email")
+			else
+				#email-form.form-group.has-error
+					label.control-label.col-sm-3(for="email") Email:
+					.col-sm-8
+						label.control-label(for="email") Email is empty
+						input#email.form-control(type="email", placeholder="Enter Email", name="email")
+			if passnotempty
+				.form-group
+					label.control-label.col-sm-3(for="pwd") Password:
+					.col-sm-8
+						input#pwd.form-control(type="password", placeholder="Enter Password", name="password")
+			else
+				.form-group.has-error
+					label.control-label.col-sm-3(for="pwd") Password:
+					.col-sm-8
+						label.control-label(for="pwd") Password is empty
+						input#pwd.form-control(type="password", placeholder="Enter Password", name="password")
 			if matching
 				.form-group
 					label.control-label.col-sm-3(for="pwd") Confirm Password:

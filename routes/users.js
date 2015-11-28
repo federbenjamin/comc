@@ -38,6 +38,7 @@ var UserSchema = mongoose.Schema({
 var Users = mongoose.model('Users', UserSchema);
 
 //Configure facebook strategy
+
 passport.serializeUser(function(user, done){
 	done(null, user);
 });
@@ -55,7 +56,7 @@ passport.use(new FacebookStrategy({
 		process.nextTick(function() {
     
 		// find the user in the database based on their facebook id
-		User.findOne({ 'email' : profile.emails[0].value}, function(err, user) {
+		Users.findOne({ 'email' : profile.emails[0].value}, function(err, user) {
  
 			// if there is an error, stop everything and return that
 			// ie an error connecting to the database
@@ -68,27 +69,37 @@ passport.use(new FacebookStrategy({
 			}
 			else {
 				// if there is no user found with that facebook id, create them
-				var fbuser = new User();
-	 
-				fbuser.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
-	 
+				var fbuser = new Users({
+					email: profile.emails[0].value // facebook can return multiple emails so we'll take the first
+				});
+	 	 
 				// save our user to the database
 				fbuser.save(function(err) {
 					if (err) throw err;
 	 
-				// if successful, return the new user
-				return done(null, fbuser);
-			});
-         } 
+					// if successful, return the new user
+					done(null, fbuser);
+				});
+			} 
       });
     });
   }
 ));
 
 router.post('/register', function(req, res) {
-	if (req.body.password !== req.body.repeatPassword) {
-		res.render('signup', { title: 'CURD App', matching: false });
-	} else {
+	if (req.body.email == ''){
+		//Return error if email is empty
+		res.render('signup', { title: 'CURD App', emailnotempty: false, passnotempty: true, matching: true});
+	}
+	else if (req.body.password == ''){
+		//Return error if password is empty
+		res.render('signup', { title: 'CURD App', emailnotempty:true, passnotempty: false, matching: true});
+	}
+	else if (req.body.password !== req.body.repeatPassword) {
+		//Return error if passwords don't match
+		res.render('signup', { title: 'CURD App', emailnotempty:true, passnotempty: true,matching: false });
+	}
+	else {
 		Users.count({}, function(err, count) {
 			var authLevel = 2;
 			if (count == 0) {
@@ -123,9 +134,23 @@ router.post('/register', function(req, res) {
 
 router.post('/login', function(req, res) {
 	Users.find({username: req.body.email}, function(err, user) {
-		if (!bcrypt.compareSync(req.body.password, user[0].password)) {
-			res.render('index', { title: 'CURD App', matching: false });
-		} else {
+		if (req.body.email == ''){
+			//Return error if email is empty
+			res.render('index', { title: 'CURD App', emailnotempty: false, passnotempty: true, userexists: true, matching: true});
+		}
+		else if (req.body.password == ''){
+			//Return error if password is empty
+			res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: false, userexists: true, matching: true});
+		}
+		else if (user[0] == null){
+			//Return error if user does not exist
+			res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: true, userexists: false, matching: true });
+		}
+		else if (!bcrypt.compareSync(req.body.password, user[0].password)) {
+			//Return error if passwords don't match
+			res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: true, userexists: true, matching: false });
+		} 
+		else {
 			var sess = req.session;
 			sess.login = req.body.email;
 			res.redirect('/');
@@ -134,7 +159,7 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/login/facebook', function(req, res) {
-	passport.authenticate('facebook', {scope: 'email'});
+	passport.authenticate('facebook', {scope: ['email']});
 });
 
 router.get('/login/facebookcallback', function(req, res) {
