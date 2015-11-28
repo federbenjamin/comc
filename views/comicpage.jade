@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    .body
+        .col-sm-4
+            h1.title.inline Comic Name
+            span 
+            span &#9734
+            span &#9734
+            span &#9734
+            span &#9734
+            span &#9734
+            span &#9734
+            span &#9734
+        .col-sm-9
+            div.center
+                div.float-left
+                    img(src = image, height = "80", weight = "80")
+                div
+                    p Author: 
+                        = authorname
+                    p Description:
+                        = " " + description
+
+                form(method="get", action="/reviews")
+                    input(id="reviews", value="Read Reviews", type="submit" class="button")
+                br
+                form(method="get", action="/getcomic")
+                    input(id="getcomic", value="See users who have this comic", type="submit" class="button")
+                br
+                form(method="get", action="/writereview")
+                    input(id="writereview", value="Write a review for this comic", type="submit" class="button")
