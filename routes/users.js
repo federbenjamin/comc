@@ -114,7 +114,7 @@ router.post('/register', function(req, res) {
 				username: req.body.email,
 				password: passEncrypted
 			});
-
+			
 			// Save it to the DB.
 			user.save(function(err) {
 				if (err) {
