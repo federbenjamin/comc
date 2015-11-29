@@ -25,8 +25,21 @@ block content
                 form(method="get", action="/reviews")
                     input(id="reviews", value="Read Reviews", type="submit" class="button")
                 br
-                form(method="get", action="/getcomic")
-                    input(id="getcomic", value="See users who have this comic", type="submit" class="button")
-                br
                 form(method="get", action="/writereview")
                     input(id="writereview", value="Write a review for this comic", type="submit" class="button")
+                br
+                div(class="span3")
+                    table(class="table table-striped")
+                        thead
+                            tr
+                                th Get this comic
+                        tbody
+                            tr
+                                td Username
+                                td User email
+                                td User rating
+                            tr
+                                td Username2
+                                td User email2
+                                td User rating2
+                                            

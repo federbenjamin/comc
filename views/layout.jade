@@ -1,24 +1,24 @@
 doctype html
 html
-	head
-		title= title
-		link(rel='stylesheet', href='/stylesheets/style.css')
-		link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', crossorigin="anonymous")
-		link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
-		link(rel='stylesheet', href='/stylesheets/bootstrap-social.css')
-		script(src="/node_modules/jquery/dist/jquery.min.js", type="text/javascript")
-	body
-		
-		nav.navbar.navbar-default.navbar-fixed-top
-			div.container-fluid
-				div.navbar-header
-					a.navbar-brand(href="/")
-						img(alt="Brand", src='/images/logo.png', height="50", width="50")
-			if login
-				ul.nav.navbar-nav.navbar-right
-					li
-						a.margined(href="/profile")
-							= " " + login
-					li
-						a.margined(href="/users/logout") Logout		
-		block content
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', crossorigin="anonymous")
+        link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap-social.css')
+        script(src="/node_modules/jquery/dist/jquery.min.js", type="text/javascript")
+    body
+        nav.navbar.navbar-default.navbar-fixed-top
+            div.container-fluid
+                div.navbar-header
+                    a.navbar-brand(href="/")
+                        img(alt="Brand", src='/images/logo.png', height="50", width="50")
+                    h1.navbar-brand(id="title") comc.
+            if login
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a.margined(href="/profile")
+                            = " " + login
+                    li
+                        a.margined(href="/users/logout") Logout		
+        block content

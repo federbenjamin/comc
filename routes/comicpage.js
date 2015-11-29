@@ -17,5 +17,4 @@ router.get('/reviews', function(req, res, next) {
 	res.render('writereview');
 });
 
-
 module.exports = router;
