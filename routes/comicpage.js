@@ -9,10 +9,6 @@ router.get('/reviews', function(req, res, next) {
 	res.render('reviews');
 });
 
-router.get('/getcomic', function(req, res, next) {
-	res.render('getcomic');
-});
-
 router.get('/reviews', function(req, res, next) {
 	res.render('writereview');
 });

@@ -20,4 +20,8 @@ router.get('/signup', function(req, res, next) {
 	res.render('signup', { title: 'CURD App', matching: true, emailnotempty:true, passnotempty:true});
 });
 
+router.get('/addcomic', function(req, res, next) {
+	res.render('addcomic');
+});
+
 module.exports = router;
