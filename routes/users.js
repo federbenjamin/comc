@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
-var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var session = require('express-session');
 var fb = require('./fb.js');
@@ -37,14 +36,17 @@ var UserSchema = mongoose.Schema({
 // Creates the model for Books
 var Users = mongoose.model('Users', UserSchema);
 
-//Configure facebook strategy
+module.exports = function(passport){
 
+//Configure facebook strategy
 passport.serializeUser(function(user, done){
 	done(null, user);
 });
 
 passport.deserializeUser(function(user, done){
-	done(null, user);
+	Users.find({'email': user.email}, function(err, user){
+		done(err, user);
+	})
 });
 
 passport.use(new FacebookStrategy({
@@ -78,7 +80,7 @@ passport.use(new FacebookStrategy({
 					if (err) throw err;
 	 
 					// if successful, return the new user
-					done(null, fbuser);
+					return done(null, fbuser);
 				});
 			} 
       });
@@ -114,7 +116,7 @@ router.post('/register', function(req, res) {
 				username: req.body.email,
 				password: passEncrypted
 			});
-
+			
 			// Save it to the DB.
 			user.save(function(err) {
 				if (err) {
@@ -151,6 +153,7 @@ router.post('/login', function(req, res) {
 			res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: true, userexists: true, matching: false });
 		} 
 		else {
+			//Store email in a session variable and redirect to homepage if user exists and password is correct
 			var sess = req.session;
 			sess.login = req.body.email;
 			res.redirect('/');
@@ -159,13 +162,15 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/login/facebook', function(req, res) {
-	passport.authenticate('facebook', {scope: ['email']});
+	//Send authentication request to facebook
+	passport.authenticate('facebook', {scope: 'email'});
 });
 
 router.get('/login/facebookcallback', function(req, res) {
 	passport.authenticate('facebook', function (err, user, info){
 		if (err) throw err;
 		if (!user) {
+			//Authentication of the user was successful and user can be logged in
 			var sess = req.session;
 			sess.login = req.body.email;
 		}
@@ -173,10 +178,13 @@ router.get('/login/facebookcallback', function(req, res) {
 	});
 });
 router.get('/logout', function(req, res) {
+	//Destroy session and redirect to log in page
 	var sess = req.session;
 	sess.destroy();
 	res.redirect('/');
 });
 
+return router;
 
-module.exports = router;
+}
+//module.exports = router;

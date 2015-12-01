@@ -1,6 +1,38 @@
 extends layout
 
 block content
+<<<<<<< HEAD
     .body
         p search for comics here
         p display comics they might want to see
+=======
+	.body
+		div.row
+			h1 Welcome to ComC!
+			a.btn.btn-success(href="/add")
+				span(class='glyphicon glyphicon-plus')
+				|  &nbsp;Add a comic
+		hr
+		div.row
+			form#search.form-horizontal(role="search", action="/search", method="post")
+				label.control-label(for="search") Search for a comic or user:
+				div.input-group
+					input.form-control(type="text" placeholder="Search..." name="search")
+					div.input-group-btn
+						button.btn.btn-default(type="submit" value="Search")
+							span.glyphicon.glyphicon-search
+				div.row.margined
+					label.control-label.col-sm-1.radio-inline(type="radio") 
+						input(type="radio", name="searchtype", value="user", checked="checked")
+						| User
+					label.control-label.col-sm-1.radio-inline(type="radio")
+						input(type="radio", name="searchtype", value="comic") 
+						| Comic
+		hr
+		div.row
+			h3 Recommendations
+			if recommendation
+				//display each recommendation
+			else
+				div No recommendations can be made since you have not chosen your favourite genres. Please do so by editing your profile.
+>>>>>>> origin/master

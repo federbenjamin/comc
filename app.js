@@ -26,9 +26,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(session({
   secret: 'keyboard cat',
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
 
 app.use(passport.initialize());
