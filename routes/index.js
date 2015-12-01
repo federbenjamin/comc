@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 	if (sess.login) {
 		username = sess.login;
 		console.log(sess.login);
+		//Render homepage, including recommendations based on user's favourite genres
 		res.render('homepage', { title: 'CURD App', matching: true, login: username});
 	}
 	else{

@@ -14,11 +14,11 @@ html
 				div.navbar-header
 					a.navbar-brand(href="/")
 						img(alt="Brand", src='/images/logo.png', height="50", width="50")
-			if login
-				ul.nav.navbar-nav.navbar-right
-					li
-						a.margined(href="/profile")
-							= " " + login
-					li
-						a.margined(href="/users/logout") Logout		
+					if login
+						ul.nav.navbar-nav.navbar-right
+							li
+								a.margined(href="/profile")
+									= " " + login
+							li
+								a.margined(href="/users/logout") Logout		
 		block content
