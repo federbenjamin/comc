@@ -1,12 +1,10 @@
 extends layout
 
 block content
-	.body
+	.body.center
 		.col-sm-4
 			h1.title.inline.slide-right 
 				= " " + name
-				if (authLevel < 2)
-					a.default-font-size(href="/profile/edit") (edit)
 				span 
 					each star in [1,2,3,4,5,6,7]
 						if (star <= rating)
@@ -21,6 +19,9 @@ block content
 					p
 						| Email: 
 						= " " + email
+					P
+						| Name:
+						= " " + name
 					p
 						| Description:
 						= " " + description
@@ -32,5 +33,32 @@ block content
 				else if (!rented)
 					button.btn.btn-default.col-sm-2(disabled= false)
 						= comic 
+		.col-sm-9
+			br
+			div.slide-right
+				h4 Reviews
 				button.btn.btn-default.col-sm-2
 					= "Read Reviews"
+				button.btn.btn-default.col-sm-2
+					= "Write Review"
+		.col-sm-9
+			br
+			div.slide-right
+				if (authLevel == 0 || authLevel == 1 || authLevel == 3)
+					h4 Edit Profile
+					form(name="getEdit", action="/profile/edit", method="post")
+						button.btn.btn-default.col-sm-2(name= "email", value= email) Edit
+		.col-sm-9
+			div.slide-right
+				if (authLevel == 0 || authLevel == 1)
+					br
+					h4 Administrative
+					form(name="deleteAcc", action="/profile/deleteAccount", method="post")
+						button.btn.btn-default.col-sm-2(type="submit", name= "email", value= email) Delete Account
+				if (authLevel == 0)
+					if (profileLevel == 2)
+						form(name="makeAdmin", action="/profile/makeAdmin", method="post")
+							button.btn.btn-default.col-sm-2(type="submit", name= "email", value= email) Make Admin
+					else if (profileLevel == 1)
+						form(name="makeAdmin", action="/profile/makeAdmin", method="post")
+							button.btn.btn-default.col-sm-2(type="submit", name= "email", value= email) Revoke Admin

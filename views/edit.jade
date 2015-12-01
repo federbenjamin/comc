@@ -6,41 +6,42 @@ block content
 			h1.title.inline.slide-right
 				= "Edit Profile"
 			form.slide-right(method="post", action="/profile/upload", enctype="multipart/form-data")
+				input(type="hidden", name="email", value=email, readonly=true)
 				label.control-label Change Profile Picture
-				</br>
-				</br>
+				br
+				br
 				input(type="file", name="profilePic")
-				</br>
+				br
 				input.btn.btn-default.col-sm-offset-10(type="submit")
-				</br>
-				</br>
+				br
+				br
 			form.slide-right(name="editProfile", action="/profile/updateprofile", method="post")
 				label.control-label Email: 
-				input.form-control(type="text", name="email")
-				</br>
+				input.form-control(type="text", name="email", readonly=true, value=email)
+				br
 				label.control-label Display Name: 
 				input.form-control(type="text", name="displayName")
-				</br>
+				br
 				label.control-label Description: 
 				input.form-control(type="text", name="description")
-				</br>
+				br
 				input.btn.btn-default.col-sm-offset-10(type="submit" value="Update")
-				</br>
-				</br>
+				br
+				br
 			form.slide-right(name="changePassword", action="/profile/updatepwd", method="post")
+				input(type="hidden", name="email", value=email, readonly=true)
 				label.control-label Old Password:
 				input.form-control.inline(type="text", name="password")
 				if (!passnotempty)
 					span Password field is empty
 				else if (wrongpassword)
 					span Incorrect password
-				</br>
+				br
 				label.control-label New Password:
 				input.form-control(type="text", name="newPassword")
-				</br>
+				br
 				label.control-label Confirm Password:
 				input.form-control(type="text", name="confirmPassword")
-				</br>
 				if (!newpasswordnotempty)
 					span Enter new password
 				else if (!matching)
