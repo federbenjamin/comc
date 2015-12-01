@@ -29,7 +29,11 @@ block content
 				</br>
 			form.slide-right(name="changePassword", action="/profile/updatepwd", method="post")
 				label.control-label Old Password:
-				input.form-control(type="text", name="password")
+				input.form-control.inline(type="text", name="password")
+				if (!passnotempty)
+					span Password field is empty
+				else if (wrongpassword)
+					span Incorrect password
 				</br>
 				label.control-label New Password:
 				input.form-control(type="text", name="newPassword")
@@ -37,4 +41,8 @@ block content
 				label.control-label Confirm Password:
 				input.form-control(type="text", name="confirmPassword")
 				</br>
+				if (!newpasswordnotempty)
+					span Enter new password
+				else if (!matching)
+					span Passwords do not match
 				input.btn.btn-default.col-sm-offset-10(type="submit" value="Update")

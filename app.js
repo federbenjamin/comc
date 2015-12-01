@@ -8,6 +8,10 @@ var session = require('express-session');
 
 var passport = require('passport');
 
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var profile = require('./routes/profile');
+
 var app = express();
 
 // view engine setup
@@ -20,16 +24,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 app.use(session({
   secret: 'keyboard cat',
   cookie: { maxAge: 60000 }
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-
-var routes = require('./routes/index');
-var users = require('./routes/users')(passport);
-var profile = require('./routes/profile');
 
 app.use('/', routes);
 app.use('/users', users);

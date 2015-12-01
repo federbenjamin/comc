@@ -113,7 +113,7 @@ router.get('/', function(req, res, next) {
   if (typeof req.session.login !== 'undefined'){
     res.render('profile', { comic: "super hero", 
                 rented: true, 
-                image: "/images/logo.png", 
+                image: '/profilePics/logo.png', 
                 user: 'user here', 
                 email: 'email', 
                 name: 'name', 
@@ -212,11 +212,20 @@ router.post('/updatepwd', function(req, res, next) {
 });
 
 router.post('/upload', upload.single('profilePic'), function(req, res) {
-	
+
   if (typeof req.session.login !== 'undefined'){
-    res.redirect('/profile/edit');
+    Users.find({username: req.session.login}, function(err, user) {    
+      if (user.image != '/profilePics/logo.png') {
+        fs.unlink(user.image);
+      }
+      
+      user.image = '/profilePics/' + req.file.filename;
+
+      res.redirect('/profile/edit');
+    });
   } else {
     res.redirect('/');
+
   }
 });
 
