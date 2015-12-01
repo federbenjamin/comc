@@ -12,6 +12,7 @@ var users = require('./routes/users');
 var profile = require('./routes/profile');
 var comicpage = require('./routes/comicpage');
 var homepage = require('./routes/homepage');
+var addcomic = require('./routes/addcomic');
 
 var app = express();
 
@@ -38,6 +39,7 @@ app.use('/users', users);
 app.use('/profile', profile);
 app.use('/comicpage', comicpage);
 app.use('/homepage', homepage);
+app.use('/addcomic', addcomic);
 
 
 // catch 404 and forward to error handler

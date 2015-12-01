@@ -1,11 +1,8 @@
 var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
+var app = express();
 var fs = require('fs');
 var path = require('path');
+var router = express.Router();
 
-router.get('/addcomic', function(req, res, next) {
-	res.render('addcomic');
-});
 
 module.exports = router;
