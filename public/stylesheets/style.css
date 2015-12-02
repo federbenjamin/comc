@@ -117,3 +117,12 @@ h1 {
 .starRating:not(:hover) > :checked ~ label:before{
   opacity : 1;
 }
+
+.underline {
+  text-decoration: underline;
+}
+
+.word-wrap {
+  width: 11em;
+  word-wrap: break-word;
+}

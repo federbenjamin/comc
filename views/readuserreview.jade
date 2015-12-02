@@ -1,0 +1,28 @@
+extends layout
+
+block content
+	.body
+		.col-sm-10
+			h1.title.inline.slide-right
+				= "Reviews for " + user
+			ul.slide-right
+				each user in review
+					div
+						label.control-label.underline
+							= "Reviewer:" + " "
+						span #{user.poster}
+						br
+						span 
+							each star in [1,2,3,4,5,6,7]
+								if (star <= user.rating)
+									span &#9733
+								else
+									span &#9734
+						br
+						span.word-wrap #{user.comment}
+						br
+						span posted on:
+							| #{user.date}
+						if (authLevel < 2) 
+							button.btn.btn-default.col-sm-offset-10(type="submit", name= "email", value= email) Delete Post
+					br
