@@ -39,8 +39,9 @@ block content
 				h4 Reviews
 				button.btn.btn-default.col-sm-2
 					= "Read Reviews"
-				button.btn.btn-default.col-sm-2
-					= "Write Review"
+				form(name="writeReview", action="/writeUserReview", method="post")
+					button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+						= "Write Review"
 		.col-sm-9
 			br
 			div.slide-right
