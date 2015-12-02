@@ -36,7 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/users', users(passport));
 app.use('/profile', profile);
 app.use('/comicpage', comicpage);
 app.use('/homepage', homepage);
