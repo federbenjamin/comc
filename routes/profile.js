@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-
+/*
 mongoose.connect('mongodb://localhost:27017/', {
   user: '',
   pass: ''
@@ -32,7 +32,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
   console.log('Connected to MongoDB');
 });
-
+*/
 /*
 var Schema = mongoose.Schema;
 var Users = mongoose.model('Users', new Schema({

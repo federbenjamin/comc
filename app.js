@@ -14,6 +14,7 @@ var comicpage = require('./routes/comicpage');
 var homepage = require('./routes/homepage');
 var search = require('./routes/search');
 var addcomic = require('./routes/addcomic');
+var writeuserreview = require('./routes/writeuserreview');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/comicpage', comicpage);
 app.use('/homepage', homepage);
 app.use('/search', search);
 app.use('/addcomic', addcomic);
+app.use('/writeuserreview', writeuserreview)
 
 
 // catch 404 and forward to error handler
