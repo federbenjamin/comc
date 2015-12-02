@@ -3,12 +3,6 @@ extends layout
 block content
 	.body
 		div.row
-			h2 Welcome to COMC
-			a.btn.btn-success(href="/addcomic")
-				span(class='glyphicon glyphicon-plus')
-				|  &nbsp;Add a comic
-		hr
-		div.row
 			form#search.form-horizontal(role="search", action="/search", method="post")
 				label.control-label(for="search") Search for a comic or user:
 				div.input-group
@@ -25,8 +19,5 @@ block content
 						| Comic
 		hr
 		div.row
-			h3 Recommendations
-			if recommendation
-				//display each recommendation
-			else
-				div No recommendations can be made since you have not chosen your favourite genres. Please do so by editing your profile.
+			h2 Search Results:
+		div.row
