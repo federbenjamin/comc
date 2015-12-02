@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var session = require('express-session');
 var fb = require('./fb.js');
