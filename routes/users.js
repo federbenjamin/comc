@@ -22,7 +22,7 @@ db.once('open', function callback () {
 
 // Define Book schema
 var UserSchema = mongoose.Schema({
-	level: Number,
+	/*level: Number,
 	username: {
 		type: String,
 		unique: true
@@ -31,7 +31,25 @@ var UserSchema = mongoose.Schema({
 	image: {
 		type: String,
 		required: false
-	}
+	}*/
+	  level: Number, //0 is superadmin, 1 is admin, 2 is regular
+	  username: {
+		type: String,
+		unique: true
+	  },
+	  password: String,
+	  image: {
+		type: String,
+		required: false
+	  },
+	  description: String,
+	  displayName: {
+		type: String,
+		unique: true
+	  },
+	  comic: String,
+	  rented: Boolean,
+	  rating: Number
 });
 
 // Creates the model for Books

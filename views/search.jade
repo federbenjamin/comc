@@ -18,11 +18,43 @@ block content
 						input(type="radio", name="searchtype", value="comic") 
 						| Comic
 		hr
-		div.row
-			h2 Search Results:
-		div.row
-			if searchtype == 'user'
-				if exists
-				else
-					h5 No users can be found for '#{searched}'
-				
+		if nosearch
+		else	
+			div.row
+				h2 Search Results for '#{searched}':
+			div.row
+				if searchtype == 'user'
+					if exists
+						table.table.table-striped.table-bordered.table-hover
+							tr
+								th Email
+								th Display Name
+							each user in data
+								tr
+									td
+										a.tablelink(href='/profile') #{user.username}
+									td
+										if user.displayName
+											a.tablelink(href='/profile') #{user.displayName}
+										else
+											a.tablelink(href='/profile') N/A
+					else
+						h5 No users can be found
+				if searchtype == 'comic'
+					if exists
+						table.table.table-striped.table-bordered.table-hover
+							tr
+								th Name
+								th Genre
+							each comic in data
+								tr
+									td 
+										a.tablelink(href='/comicpage') #{comic.name}
+									td
+										if comic.genre
+											a.tablelink(href='/comicpage') #{comic.genre}
+										else
+											a.tablelink(href='/comicpage') N/A
+					else
+						h5 No comics can be found
+					

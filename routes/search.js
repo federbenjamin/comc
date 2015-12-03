@@ -22,46 +22,60 @@ db.once('open', function callback () {
 // Creates the model for Books
 var Users = mongoose.model('Users');
 
-router.post('/', function(req, res, next) {
-	//Check which radio button was pressed
-	//If user, search by email or by display name
-	if (req.body.searchtype == 'user'){
-		Users.find(
-			//Find users based on email or displayname
-			//{$or: [{username: new RegExp('.*'+req.body.search+'.*', "i")}, {displayName: new RegExp('.*'+req.body.search+'.*', "i")}]},
-			{username: new RegExp('.*'+req.body.search+'.*', "i")},
-			function(err, users){
-				if (err) {
-					res.status(500).send(err);
-					console.log(err);
-					return;
-				}
-				console.log(req.body.search);
-				console.log(users);
-				if (users.length == 0) res.render('search', {exists: false, searchtype: 'user', searched:req.body.search});
-				else res.render('search', {exists: true, searchtype: 'user', data: users});
-			}
-		);
+//Case when user tries to access user page without searching
+router.get('/', function(req, res, next) {
+	if (req.session.login) {
+		res.render('search', {nosearch: true});
 	}
-	//If comic, search by name, genre or description
-	else if (req.body.searchtype == 'comic'){
-		res.render('search', {searchtype: 'comic', exists: false});
-		// //Find comic by name or description
-		// Comics.find(
-			// //Find users based on email or displayname
-			// //{$or: [{email: new RegExp('*'+req.body.search+'*', "i"}}, {displayName: new RegExp('^'+req.body.search+'$', "i"}}]},
-			// {email: new RegExp('*'+req.body.search+'*', "i"},
-			// function(err, users){
-				// if (err) {
-					// res.status(500).send(err);
-					// console.log(err);
-					// return;
+	else{
+		res.redirect('/');
+	}
+});
+
+router.post('/', function(req, res, next) {
+	if (req.session.login) {
+		//Check which radio button was pressed
+		//If user, search by email or by display name
+		if (req.body.searchtype == 'user'){
+			Users.find(
+				//Find users based on email or displayname
+				{$or: [{username: new RegExp('.*'+req.body.search+'.*', "i")}, {displayName: new RegExp('.*'+req.body.search+'.*', "i")}]},
+				'username displayName',
+				//{username: new RegExp('.*'+req.body.search+'.*', "i")},
+				function(err, users){
+					if (err) {
+						res.status(500).send(err);
+						console.log(err);
+						return;
+					}
+					if (users.length == 0) res.render('search', {exists: false, searchtype: 'user', searched:req.body.search, login: req.session.login});
+					else res.render('search', {exists: true, searchtype: 'user', data: users, searched:req.body.search, login: req.session.login});
+				}
+			);
+		}
+		//If comic, search by name, genre or description
+		else if (req.body.searchtype == 'comic'){
+			res.render('search', {searchtype: 'comic', exists: false, searched:req.body.search, login: req.session.login});
+			// //Find comic by name or description
+			// Comics.find(
+				// //Find users based on email or displayname
+				// //{$or: [{email: new RegExp('*'+req.body.search+'*', "i"}}, {displayName: new RegExp('^'+req.body.search+'$', "i"}}]},
+				// {email: new RegExp('*'+req.body.search+'*', "i"},
+				// function(err, users){
+					// if (err) {
+						// res.status(500).send(err);
+						// console.log(err);
+						// return;
+					// }
+					// if (users.length == 0) res.render('search', searchtype: 'comic', exists: false);
+					// else res.render('search', searchtype: 'comic', exists: true, data: comics);
 				// }
-				// if (users.length == 0) res.render('search', searchtype: 'comic', exists: false);
-				// else res.render('search', searchtype: 'comic', exists: true, data: comics);
-			// }
-		// );
-	};
+			// );
+		};
+	}
+	else{
+		res.redirect('/');
+	}
 });
 
 module.exports = router;
