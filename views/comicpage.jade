@@ -22,12 +22,15 @@ block content
                         = authorname
                     p Description:
                         = " " + description
-
-                form(method="get", action="/reviews")
-                    input(id="reviews", value="Read Reviews", type="submit" class="button")
+                
+                form(name="writeReview", action="/readComicReview", method="post")
+                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
+                        = "Read Review"
                 br
-                form(method="get", action="/writereview")
-                    input(id="writereview", value="Write a review for this comic", type="submit" class="button")
+                form(name="writeReview", action="/writeComicReview", method="post")
+                    input(name="comicowner", type="hidden", value=username)
+                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
+                        = "Write Review"
                 br
                 div(class="span3")
                     table(class="table table-striped")
