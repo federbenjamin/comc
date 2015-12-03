@@ -78,7 +78,11 @@ passport.use(new FacebookStrategy({
 	 	 
 				// save our user to the database
 				fbuser.save(function(err) {
-					if (err) throw err;
+					if (err){
+						res.status(500).send(err);
+						console.log(err);
+						return;
+					}
 	 
 					// if successful, return the new user
 					return done(null, fbuser);
@@ -169,7 +173,11 @@ router.get('/login/facebook', function(req, res) {
 
 router.get('/login/facebookcallback', function(req, res) {
 	passport.authenticate('facebook', function (err, user, info){
-		if (err) throw err;
+		if (err) {
+			res.status(500).send(err);
+			console.log(err);
+			return;
+		}
 		if (!user) {
 			//Authentication of the user was successful and user can be logged in
 			var sess = req.session;

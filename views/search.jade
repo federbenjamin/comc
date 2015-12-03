@@ -21,3 +21,8 @@ block content
 		div.row
 			h2 Search Results:
 		div.row
+			if searchtype == 'user'
+				if exists
+				else
+					h5 No users can be found for '#{searched}'
+				
