@@ -14,6 +14,10 @@ var comicpage = require('./routes/comicpage');
 var homepage = require('./routes/homepage');
 var search = require('./routes/search');
 var addcomic = require('./routes/addcomic');
+var writeuserreview = require('./routes/writeuserreview');
+var readuserreview = require('./routes/readuserreview');
+var writecomicreview = require('./routes/writecomicreview');
+var readcomicreview = require('./routes/readcomicreview');
 
 var app = express();
 
@@ -43,6 +47,10 @@ app.use('/comicpage', comicpage);
 app.use('/homepage', homepage);
 app.use('/search', search);
 app.use('/addcomic', addcomic);
+app.use('/writeuserreview', writeuserreview);
+app.use('/readuserreview', readuserreview);
+app.use('/writecomicreview', writecomicreview);
+app.use('/readcomicreview', readcomicreview);
 
 
 // catch 404 and forward to error handler

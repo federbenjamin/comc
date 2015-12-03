@@ -1,0 +1,36 @@
+extends layout
+
+block content
+	.head
+		meta(charset="UTF-8")
+	.body
+		.col-sm-4
+			h1.title.inline.slide-right
+				= "Write Review"
+			form(name="submitReview", action="/writeUserReview/submitUserReview", method="post")
+				label.control-label User: 
+				input.form-control(type="text", name="user", value= email)
+				br
+				label.control-label Comment: 
+				input.form-control(type="text", name="comment")
+				br
+				label.control-label Rating:
+				// Star rating from http://code.stephenmorley.org/html-and-css/star-rating-widget/
+				span.starRating
+					input(id="rating7", type="radio", name="rating", value="7")
+					label(for="rating7") 7
+					input(id="rating6", type="radio", name="rating", value="6")
+					label(for="rating6") 6
+					input(id="rating5", type="radio", name="rating", value="5")
+					label(for="rating5") 5
+					input(id="rating4", type="radio", name="rating", value="4")
+					label(for="rating4") 4
+					input(id="rating3", type="radio", name="rating", value="3")
+					label(for="rating3") 3
+					input(id="rating2", type="radio", name="rating", value="2")
+					label(for="rating2") 2
+					input(id="rating1", type="radio", name="rating", value="1")
+					label(for="rating1") 1		
+				br
+				br
+				input.btn.btn-default.col-sm-offset-10(type="submit" value="Submit")
