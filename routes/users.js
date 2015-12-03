@@ -31,7 +31,12 @@ var UserSchema = mongoose.Schema({
 	image: {
 		type: String,
 		required: false
-	}
+	}, 
+    comic : {
+        name: String, 
+        description: String, 
+        required: false
+    }
 });
 
 // Creates the model for Books
@@ -115,7 +120,11 @@ router.post('/register', function(req, res) {
 			var user = new Users({
 				level: authLevel,
 				username: req.body.email,
-				password: passEncrypted
+				password: passEncrypted, 
+                comic : {
+                    name: " ", 
+                    description: " "
+                }
 			});
 			
 			// Save it to the DB.

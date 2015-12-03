@@ -22,7 +22,15 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.get('/addcomic', function(req, res, next) {
-	res.render('addcomic');
+    var login = false;
+    var sess = req.session;
+	if (typeof req.session.login !== 'undefined'){
+        login = sess.login;
+        res.render('addcomic', {login: login});
+    } 
+    else {
+        res.redirect('/');
+    }
 });
 
 module.exports = router;
