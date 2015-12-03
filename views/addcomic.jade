@@ -3,6 +3,17 @@ extends layout
 block content
     .body
         div(class="container")
+            if covertitle
+                img(src='/images/comicPics/' + covertitle, height="80")
+                
+            form(class="form-horizontal", action="/addcomic/upload", method="post", enctype="multipart/form-data")
+                input(name="login", type="hidden", value=login)
+                div(class="form-group")
+                label(class="control-label col-sm-2", for="comicname") Select an image to upload:
+                div(class="col-sm-10")
+                    input(type="file", name="comiccover")
+                    input(type="submit", value="Upload Image")
+            
             form(class="form-horizontal", role="form", method="post", action="/addcomic/addedcomic")
                 input(name="login", type="hidden", value=login)
                 div(class="form-group")

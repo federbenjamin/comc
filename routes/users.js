@@ -34,7 +34,8 @@ var UserSchema = mongoose.Schema({
 	}, 
     comic : {
         name: String, 
-        description: String, 
+        description: String,
+        covertitle: String,
         required: false
     }
 });
@@ -123,7 +124,8 @@ router.post('/register', function(req, res) {
 				password: passEncrypted, 
                 comic : {
                     name: " ", 
-                    description: " "
+                    description: " ", 
+                    covertitle: " "
                 }
 			});
 			

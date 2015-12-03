@@ -33,7 +33,6 @@ router.post('/addedcomic', function(req, res) {
     
 	else {
         Users.find({username: req.body.login}, function(err, user) {
-            console.log(req.body.comicdescription);
             user[0].comic.name = req.body.comicname;
             user[0].comic.description = req.body.comicdescription;
             res.render('comicpage', {
@@ -49,6 +48,27 @@ router.get('/comicpage', function(req, res) {
     res.render('comicpage');
 });
 
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/images/comicPics');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now()+'.png');
+  }
+});
+
+var upload = multer({ storage: storage });
+
+router.post('/upload', upload.single('comiccover'), function(req, res) {
+    Users.find({username: req.body.login}, function(err, user) {
+        console.log(user[0].username);
+        user[0].comic.covertitle = req.file.filename;
+        
+        res.render('addcomic', {
+            covertitle: user[0].comic.covertitle
+        }); 
+    }); 
+});
 
 
 module.exports = router;
