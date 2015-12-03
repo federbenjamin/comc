@@ -43,10 +43,9 @@ var UserSchema = mongoose.Schema({
 			covertitle: String,
 			rating: String,
 			required: false
-		}
+		},
 	  rented: Boolean,
-	  rating: Number
-	}, 
+	  rating: Number 
 });
 
 // Creates the model for Books

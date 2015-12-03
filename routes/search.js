@@ -57,10 +57,10 @@ router.post('/', function(req, res, next) {
 		else if (req.body.searchtype == 'comic'){
 			res.render('search', {searchtype: 'comic', exists: false, searched:req.body.search, login: req.session.login});
 			// //Find comic by name or description
-			// Comics.find(
+			// Users.find(
 				// //Find users based on email or displayname
-				// //{$or: [{email: new RegExp('*'+req.body.search+'*', "i"}}, {displayName: new RegExp('^'+req.body.search+'$', "i"}}]},
-				// {email: new RegExp('*'+req.body.search+'*', "i"},
+				// //{$or: [{comic.name: new RegExp('*'+req.body.search+'*', "i"}}, {comic.genre: new RegExp('^'+req.body.search+'$', "i"}}]},
+				// {comic.name: new RegExp('*'+req.body.search+'*', "i"},
 				// function(err, users){
 					// if (err) {
 						// res.status(500).send(err);
