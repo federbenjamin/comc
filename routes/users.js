@@ -132,14 +132,14 @@ router.post('/register', function(req, res) {
 			}
 
 			var passEncrypted = bcrypt.hashSync(req.body.password);
-			var tempUsername = /[^@]*/.exec(req.body.email);
+			// var tempUsername = /[^@]*/.exec(req.body.email);
 
 			// Instanitate the model.
 			var user = new Users({
 				level: authLevel,
 				username: req.body.email,
 				password: passEncrypted,
-				displayName: tempUsername
+				displayName: req.body.email
 			});
 			
 			// Save it to the DB.
