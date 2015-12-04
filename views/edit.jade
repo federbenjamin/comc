@@ -25,7 +25,9 @@ block content
 				label.control-label Description: 
 				input.form-control(type="text", name="description")
 				br
-				input.btn.btn-default.col-sm-offset-10(type="submit" value="Update")
+				input.btn.btn-default.col-sm-4(type="submit" value="Update")
+				button.btn.btn-default.col-sm-4(onclick="window.history.back()", style="float: right") Back
+				br
 				br
 				br
 			form.slide-right(name="changePassword", action="/profile/updatepwd", method="post")
@@ -46,4 +48,8 @@ block content
 					span Enter new password
 				else if (!matching)
 					span Passwords do not match
-				input.btn.btn-default.col-sm-offset-10(type="submit" value="Update")
+				br
+				input.btn.btn-default.col-sm-4(type="submit" value="Update")
+				button.btn.btn-default.col-sm-4(onclick="window.history.back()", style="float: right") Back
+				br
+				br
