@@ -22,30 +22,34 @@ db.once('open', function callback () {
 
 // Define Book schema
 var UserSchema = mongoose.Schema({
-	  level: Number, //0 is superadmin, 1 is admin, 2 is regular
+	  level: {
+	  	type: Number, min: 0, max: 2 //0 is superadmin, 1 is admin, 2 is regular
+	  }, 
 	  username: {
 		type: String,
 		unique: true
 	  },
 	  password: String,
-	  image: {
-		type: String,
-		required: false
-	  },
-	  description: String,
 	  displayName: {
 		type: String,
 		unique: true
 	  },
-		comic : {
-			name: String, 
-			description: String,
-			covertitle: String,
-			rating: String,
-			required: false
-		},
-	  rented: Boolean,
-	  rating: Number 
+	  image: {
+		type: String,
+		default: "/uploads/profilePics/logo.png"
+	  },
+	  description: {
+	  	type: String,
+	  	default: "No Description Yet!"
+	  },
+	  location: String,
+	  rating: {
+	  	type: Number, min: 1, max: 7
+	  },
+	  num_ratings: {
+		type: Number,
+		default: 0
+	  },
 });
 
 // Creates the model for Books
@@ -133,13 +137,7 @@ router.post('/register', function(req, res) {
 			var user = new Users({
 				level: authLevel,
 				username: req.body.email,
-				password: passEncrypted, 
-                comic : {
-                    name: " ", 
-                    description: " ", 
-                    covertitle: " ", 
-                    rating: " "
-                }
+				password: passEncrypted
 			});
 			
 			// Save it to the DB.
