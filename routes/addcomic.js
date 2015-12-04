@@ -35,10 +35,12 @@ router.post('/addedcomic', function(req, res) {
         Users.find({username: req.body.login}, function(err, user) {
             user[0].comic.name = req.body.comicname;
             user[0].comic.description = req.body.comicdescription;
+            user[0].save();
             res.render('comicpage', {
                 description: user[0].comic.description, 
                 comicname: user[0].comic.name, 
-                username: user[0].username
+                username: user[0].username, 
+                covertitle: user[0].comic.covertitle
             });
         });
 	}
@@ -61,11 +63,11 @@ var upload = multer({ storage: storage });
 
 router.post('/upload', upload.single('comiccover'), function(req, res) {
     Users.find({username: req.body.login}, function(err, user) {
-        console.log(user[0].username);
         user[0].comic.covertitle = req.file.filename;
-        
+        user[0].save();
         res.render('addcomic', {
-            covertitle: user[0].comic.covertitle
+            covertitle: user[0].comic.covertitle,
+            login: req.body.login
         }); 
     }); 
 });

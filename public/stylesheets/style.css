@@ -131,3 +131,9 @@ h1 {
   width: 11em;
   word-wrap: break-word;
 }
+
+#centered {
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+}

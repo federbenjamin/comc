@@ -2,7 +2,7 @@ extends layout
 
 block content
     .body
-        .col-sm-4
+        .col-sm-8
             h1.title.inline 
                 = " " + comicname
             span 
@@ -13,10 +13,7 @@ block content
             span &#9734
             span &#9734
             span &#9734
-        .col-sm-9
-            div.center
-                div.float-left
-                    img(src = image, height = "80", weight = "80")
+            div(id="centered")
                 div
                     p Author: 
                         = authorname
@@ -27,11 +24,15 @@ block content
                     button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
                         = "Read Review"
                 br
+                br
+                
                 form(name="writeReview", action="/writeComicReview", method="post")
                     input(name="comicowner", type="hidden", value=username)
                     button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
                         = "Write Review"
                 br
+                br
+                
                 div(class="span3")
                     table(class="table table-striped")
                         thead
@@ -42,4 +43,6 @@ block content
                                 td Username: 
                                     = " " + username
                                 td User rating: 
-                                    = "rating"                                            
+                                    = "rating"  
+        .col-sm-4
+            img(src='/images/comicPics/' + covertitle, height = "80")
