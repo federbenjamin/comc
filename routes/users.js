@@ -36,7 +36,7 @@ var UserSchema = mongoose.Schema({
 	  },
 	  image: {
 		type: String,
-		default: "/uploads/profilePics/logo.png"
+		default: "/images/logo.png"
 	  },
 	  description: {
 	  	type: String,
@@ -132,12 +132,14 @@ router.post('/register', function(req, res) {
 			}
 
 			var passEncrypted = bcrypt.hashSync(req.body.password);
+			var tempUsername = /[^@]*/.exec(req.body.email);
 
 			// Instanitate the model.
 			var user = new Users({
 				level: authLevel,
 				username: req.body.email,
-				password: passEncrypted
+				password: passEncrypted,
+				displayName: tempUsername
 			});
 			
 			// Save it to the DB.

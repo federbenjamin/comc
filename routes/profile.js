@@ -77,40 +77,42 @@ router.get('/', function(req, res, next) {
 
       Users.find({username: queryUser}, function(err, user) {
 
-        var comic;
-        if (user[0].comic === undefined || user[0].comic == '') {
-          comic = 'None available';
-        } else {
-          comic = user[0].comic;
-        } 
+        // var comic;
+        // if (user[0].comic === undefined || user[0].comic == '') {
+        //   comic = 'None available';
+        // } else {
+        //   comic = user[0].comic;
+        // } 
 
-        var rented;
-        if (user[0].comic === undefined || user[0].rented == '' ) {
-          rented = true
-        } else {
-          rented = user[0].rented
-        }
+        // var rented;
+        // if (user[0].comic === undefined || user[0].rented == '' ) {
+        //   rented = true
+        // } else {
+        //   rented = user[0].rented
+        // }
 
-        var image;
-        if (user[0].comic === undefined || user[0].image == '' ) {
-          image = '/images/logo.png';
-        } else {
-          image = user[0].image;
-        }
+        // var image;
+        // if (user[0].comic === undefined || user[0].image == '' ) {
+        //   image = '/images/logo.png';
+        // } else {
+        //   image = user[0].image;
+        // }
 
-        var name;
-        if (user[0].comic === undefined || user[0].displayName == '') {
-          name = 'user';
-        } else {
-          name = user[0].displayNmae;
-        }
+        // var name;
+        // if (user[0].comic === undefined || user[0].displayName == '') {
+        //   name = 'user';
+        // } else {
+        //   name = user[0].displayNmae;
+        // }
 
-        var rating;
-        if (user[0].comic === undefined || user[0].rating == '') {
-          rating = 0;
-        } else {
-          rating = user[0].rating;
-        }
+        // var rating;
+        // if (user[0].comic === undefined || user[0].rating == '') {
+        //   rating = 0;
+        // } else {
+        //   rating = user[0].rating;
+        // }
+
+        var rating = (user[0].rating == '' ? 0 : user[0].rating);
 
         // Get the current user's authority level
         var access;
@@ -132,20 +134,18 @@ router.get('/', function(req, res, next) {
 
         }
 
-        var description;
-        if (description === undefined) {
-          description = '';
-        }
+        // var description;
+        // if (description === undefined) {
+        //   description = '';
+        // }
       
         req.session.profileOwner = '';
 
         res.render('profile', {
-                  comic: comic, 
-                  rented: rented, 
-                  image: image,
+                  image: user[0].image,
                   email: user[0].username, 
-                  name: name, 
-                  description: description,
+                  name: user[0].displayName, 
+                  description: user[0].description,
                   //authLevel: access,
                   authLevel: 0,
                   rating: rating,
