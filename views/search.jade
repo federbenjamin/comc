@@ -32,12 +32,9 @@ block content
 							each user in data
 								tr
 									td
-										a.tablelink(href='/profile') #{user.username}
+										a.tablelink(href='/profile?username=#{user.username}') #{user.username}
 									td
-										if user.displayName
-											a.tablelink(href='/profile') #{user.displayName}
-										else
-											a.tablelink(href='/profile') N/A
+										a.tablelink(href='/profile?username=#{user.username}') #{user.displayName}
 					else
 						h5 No users can be found
 				if searchtype == 'comic'
