@@ -23,6 +23,11 @@ block content
 						br
 						span posted on:
 							| #{user.date}
-						if (authLevel < 2) 
-							button.btn.btn-default.col-sm-offset-10(type="submit", name= "email", value= email) Delete Post
+						if (authLevel < 2 || user.poster == currentUser) 
+							form(name="deleteReview", action="/readuserreview/deleteReview", method="post")
+								input(type="hidden", name="poster", value= user.poster)
+								input(type="hidden", name="timestamp", value= user.date)
+								input(type="hidden", name="comment", value= user.comment)
+								input(type="hidden", name="rating", value= user.rating)
+								button.btn.btn-default.col-sm-offset-10(type="submit", name="user", value= user.username) Delete Post
 					br
