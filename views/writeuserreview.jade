@@ -9,7 +9,7 @@ block content
 				= "Write Review"
 			form(name="submitReview", action="/writeUserReview/submitUserReview", method="post")
 				label.control-label User: 
-				input.form-control(type="text", name="user", value= email)
+				input.form-control(type="text", name="user", value= email, readonly)
 				br
 				label.control-label Comment: 
 				input.form-control(type="text", name="comment")
@@ -33,4 +33,5 @@ block content
 					label(for="rating1") 1		
 				br
 				br
-				input.btn.btn-default.col-sm-offset-10(type="submit" value="Submit")
+				input.btn.btn-default.inline.col-sm-4(type="submit" value="Submit")
+				button.btn.btn-default.col-sm-4(onclick="window.history.back()", style="float: right") Cancel
