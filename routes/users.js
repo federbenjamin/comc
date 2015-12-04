@@ -20,7 +20,7 @@ db.once('open', function callback () {
 	console.log('Connected to MongoDB');
 });
 
-// Define Book schema
+// Define User schema
 var UserSchema = mongoose.Schema({
 	  level: {
 	  	type: Number, min: 0, max: 2 //0 is superadmin, 1 is admin, 2 is regular
@@ -51,9 +51,16 @@ var UserSchema = mongoose.Schema({
 		default: 0
 	  },
 });
-
-// Creates the model for Books
+// Creates the model for Users
 var Users = mongoose.model('Users', UserSchema);
+
+// Define Genres schema
+var GenreSchema = mongoose.Schema({
+	  username: String,
+	  genre: String
+});
+// Creates the model for Users' genre preferences
+var Genres = mongoose.model('Genres', GenreSchema);
 
 module.exports = function(passport){
 
@@ -112,6 +119,7 @@ passport.use(new FacebookStrategy({
 ));
 
 router.post('/register', function(req, res) {
+	console.log(req);
 	if (req.body.email == ''){
 		//Return error if email is empty
 		res.render('signup', { title: 'CURD App', emailnotempty: false, passnotempty: true, matching: true});
@@ -129,6 +137,21 @@ router.post('/register', function(req, res) {
 			var authLevel = 2;
 			if (count == 0) {
 				authLevel = 0;
+			}
+
+			for (i = 0; i < req.body.genre.length; i++) {
+				var preference = new Genres({
+					username: req.body.email,
+					genre: req.body.genre[i]
+				});
+
+				preference.save(function(err) {
+					if (err) {
+						res.status(500).send(err);
+						console.log(err);
+						return;
+					}
+				});
 			}
 
 			var passEncrypted = bcrypt.hashSync(req.body.password);
