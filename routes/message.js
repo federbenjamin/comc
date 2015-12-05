@@ -1,0 +1,105 @@
+var express = require('express');
+var router = express.Router();
+var session = require('express-session');  
+var mongoose = require('mongoose');
+
+// Create message collection
+var MessageSchema = mongoose.Schema({
+	receiver: String,
+	sender: String,
+	subject: {
+		type: String,
+		default: ''
+	},
+	message: {
+		type: String,
+		default: ''
+	},
+	date: {
+		type: Date,
+		default: Date()
+	},
+	new: {
+		type: Boolean,
+		default: true
+	}
+});
+
+var Messages = mongoose.model('Messages', MessageSchema);
+var Users = mongoose.model('Users');
+
+// Get message page
+router.get('/', function(req, res) {
+
+	Messages.find({ receiver: req.session.login }, function(err, mess) {
+
+		console.log("messages: " + mess);
+
+		res.render('message', { message: mess, title: "COMC" });
+
+	});
+});
+
+router.post('/writeMessage', function(req, res) {
+	if (req.session.login !== undefined) {
+		res.render('writeMessage', { email: req.body.email });
+
+	} else {
+		res.redirect('/');
+
+	}
+
+});
+
+// Write message
+router.post('/writeMessage/write', function(req, res) {
+
+	var message = new Messages({
+				receiver: req.body.user,
+				sender: req.session.login,
+				subject: req.body.subject,
+				message: req.body.message,
+	});
+
+	message.save(function(err) {
+	    if (err) {
+	    	res.status(500).send(err);
+	      	console.log(err);
+	      	return;
+	    }
+
+  	});
+
+  	res.redirect('/message');
+
+});
+
+// Read message
+router.post('/read', function(req, res) {
+
+	console.log(req.body.sender);
+	
+	Messages.find({ receiver: req.body.receiver, sender: req.body.sender, date: req.body.date }, function(err, msg) {
+		Users.find({ username: req.body.sender }, function(err, user) {
+
+			console.log(msg);
+			res.render('readMessage', { email: user[0].username, 
+										name: user[0].displayName, 
+										image: user[0].image, 
+										subject: msg[0].subject,
+										message: msg[0].message
+									  });
+
+		});
+
+	});
+
+});
+
+// Delete message
+router.post('/delete', function(req, res) {
+
+
+});
+
+module.exports = router;

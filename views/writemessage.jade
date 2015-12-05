@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	.body
+		.col-sm-4
+			h1.title.inline.slide-right
+				= "Send Message"
+			form(name="writeMessage", action="/message/writeMessage/write", method="post")
+				label.control-label User: 
+				input.form-control(type="text", name="user", value= email)
+				br
+				input.form-control(type="text", name="subject", placeholder="Subject")
+				br
+				label.control-label Message: 
+				input.form-control(type="text", name="message")
+				br
+				br
+				input.btn.btn-default.col-sm-offset-10(type="submit" value="Submit")

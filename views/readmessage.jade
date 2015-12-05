@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	.body
+		.col-sm-9
+			div.slide-right
+				div.float-left
+					img(src = image, height = "80", weight = "80")
+				div
+					p
+						| Email: 
+						= " " + email
+					P
+						| Name:
+						= " " + name
+					P
+						| Subject:
+						= " " + subject
+					P
+						| Message:
+						= " " + message
