@@ -119,7 +119,7 @@ passport.use(new FacebookStrategy({
 ));
 
 router.post('/register', function(req, res) {
-	console.log(req);
+	//console.log(req);
 	if (req.body.email == ''){
 		//Return error if email is empty
 		res.render('signup', { title: 'CURD App', emailnotempty: false, passnotempty: true, matching: true});
@@ -144,7 +144,6 @@ router.post('/register', function(req, res) {
 					username: req.body.email,
 					genre: req.body.genre[i]
 				});
-
 				preference.save(function(err) {
 					if (err) {
 						res.status(500).send(err);

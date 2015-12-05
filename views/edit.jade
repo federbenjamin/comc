@@ -25,6 +25,53 @@ block content
 				label.control-label Description: 
 				input.form-control(type="text", name="description")
 				br
+				div.row
+					label.control-label.col-sm-3 Update your favourite genres:
+				div.row
+					.col-sm-2
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox") 
+						input(type="checkbox", name="genre[]", value="adventure")
+						| Adventure
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="checkbox", name="genre[]", value="action") 
+						| Action
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="checkbox", name="genre[]", value="comedy") 
+						| Comedy
+				div.row
+					.col-sm-2
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox") 
+						input(type="checkbox", name="genre[]", value="crime")
+						| Crime
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="checkbox", name="genre[]", value="drama") 
+						| Drama
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="checkbox", name="genre[]", value="fantasy") 
+						| Fantasy
+				div.row
+					.col-sm-2
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox") 
+						input(type="checkbox", name="genre[]", value="horror")
+						| Horror
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="checkbox", name="genre[]", value="mystery") 
+						| Mystery
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="checkbox", name="genre[]", value="nonfiction") 
+						| Non-Fiction
+				div.row
+					.col-sm-2
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox") 
+						input(type="checkbox", name="genre[]", value="romance")
+						| Romance
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="checkbox", name="genre[]", value="scifi") 
+						| Sci-Fi
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="checkbox", name="genre[]", value="psychological") 
+						| Psychological
+				br
 				input.btn.btn-default.col-sm-4(type="submit" value="Update")
 				button.btn.btn-default.col-sm-4(onclick="window.history.back()", style="float: right") Back
 				br

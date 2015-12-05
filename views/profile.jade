@@ -25,6 +25,13 @@ block content
 					p
 						| Description:
 						= " " + description
+					p
+						| Favourite Genres:
+						if nogenre
+							= " No favourite genres have been selected"
+						else
+							each genre in genres
+								= " " + genre.genre
 			div.slide-right
 				h4 My Comics
 				if (rented)

@@ -57,6 +57,7 @@ var Users = mongoose.model('Users', new Schema({
 }), 'users');
 */
 var Users = mongoose.model('Users');
+var Genres = mongoose.model('Genres');
 
 router.get('/', function(req, res, next) {
 
@@ -88,18 +89,42 @@ router.get('/', function(req, res, next) {
         } else if (currentUser[0].level == 1 && user[0].level == 2) {
           access = 1;
         }
-
-        res.render('profile', {
-                  image: user[0].image,
-                  email: user[0].username, 
-                  name: user[0].displayName, 
-                  description: user[0].description,
-                  authLevel: access,
-                  rating: rating,
-                  profileLevel: user[0].level,
-				  login: req.session.login
-        });
-
+		
+		Genres.find({username:user[0].username}, function(err, genreusers){
+			if (err) {
+			  res.status(500).send(err);
+			  console.log(err);
+			  return;
+			}
+			//No genres were selected by user
+			if (!genreusers.length){
+				res.render('profile', {
+						  image: user[0].image,
+						  email: user[0].username, 
+						  name: user[0].displayName, 
+						  description: user[0].description,
+						  authLevel: access,
+						  rating: rating,
+						  profileLevel: user[0].level,
+						  login: req.session.login,
+						  nogenre:true
+				});
+			}
+			//Genres were selected by the user
+			else{
+				res.render('profile', {
+						  image: user[0].image,
+						  email: user[0].username, 
+						  name: user[0].displayName, 
+						  description: user[0].description,
+						  authLevel: access,
+						  rating: rating,
+						  profileLevel: user[0].level,
+						  login: req.session.login,
+						  genres:genreusers
+				});
+			}
+		});
       });
   
    });  
@@ -146,6 +171,31 @@ router.post('/updateprofile', function(req, res, next) {
       });
 
     });
+	if (req.body.genre != null && req.body.genre.length>0){ //Only update when genre is selected
+		Genres.find({username:req.body.email}).remove(function(err){
+			if (err) {
+			  res.status(500).send(err);
+			  console.log(err);
+			  return;
+			}
+			
+			//Add each selected genre to the database
+			for (i = 0; i < req.body.genre.length; i++) {
+				var preference = new Genres({
+					username: req.body.email,
+					genre: req.body.genre[i]
+				});
+				preference.save(function(err) {
+					if (err) {
+						res.status(500).send(err);
+						console.log(err);
+						return;
+					}
+				});
+			}
+		});
+	}
+		
 
     res.render('edit', {email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true, login: req.session.login});
 
