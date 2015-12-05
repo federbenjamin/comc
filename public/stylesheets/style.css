@@ -137,3 +137,45 @@ h1 {
     margin-left: auto;
     margin-right: auto;
 }
+
+/* From http://www.electrictoolbox.com/jquey-make-entire-table-row-clickable/ */
+table#messageList {
+    border-collapse: collapse;
+    width: 100%;   
+}
+#messageList tr {
+    background-color: #eee;
+    border-top: 1px solid #fff;
+}
+#messageList tr:hover {
+    background-color: #ccc;
+}
+#messageList th {
+    background-color: #fff;
+}
+#messageList th, #messageList td {
+    padding: 3px 5px;
+}
+#messageList td:hover {
+    cursor: pointer;
+}
+
+/* ------------------------------ */
+
+.align-right {
+  text-align: right;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.scrollable {
+  overflow: auto;
+  width: 100%;
+  height: 500px;
+}
