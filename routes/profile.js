@@ -96,7 +96,8 @@ router.get('/', function(req, res, next) {
                   description: user[0].description,
                   authLevel: access,
                   rating: rating,
-                  profileLevel: user[0].level
+                  profileLevel: user[0].level,
+				  login: req.session.login
         });
 
       });
@@ -112,7 +113,7 @@ router.get('/', function(req, res, next) {
 router.post('/edit', function(req, res, next) {
 
   if (typeof req.session.login !== 'undefined'){
-    res.render('edit', {email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true});
+    res.render('edit', {email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true, login: req.session.login});
   } else {
     res.redirect('/');
   }
@@ -146,7 +147,7 @@ router.post('/updateprofile', function(req, res, next) {
 
     });
 
-    res.render('edit', {email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true});
+    res.render('edit', {email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true, login: req.session.login});
 
   } else {
     res.redirect('/');
@@ -164,16 +165,16 @@ router.post('/updatepwd', function(req, res, next) {
       var passEncrypted1 = bcrypt.hashSync(req.body.newPassword);
 
       if (!bcrypt.compareSync(req.body.password, user[0].password)) {
-        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: true, newpasswordnotempty: true, matching: true });
+        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: true, newpasswordnotempty: true, matching: true , login: req.session.login});
     
       } else if (req.body.password == '') {
-        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: false, wrongpassword: false, newpasswordnotempty: true, matching: true });
+        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: false, wrongpassword: false, newpasswordnotempty: true, matching: true , login: req.session.login});
 
       } else if (req.body.newPassword == '') {
-        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: false, matching: true });
+        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: false, matching: true , login: req.session.login});
 
       } else if (req.body.newPassword != req.body.confirmPassword) {
-        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: false });
+        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: false , login: req.session.login});
     
       } else {
 
@@ -187,7 +188,7 @@ router.post('/updatepwd', function(req, res, next) {
           }
         });
 
-        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true });
+        res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true, login: req.session.login });
 
       }
   });
@@ -207,7 +208,7 @@ router.post('/upload', upload.single('profilePic'), function(req, res) {
       
       user[0].image = '/profilePics/' + req.file.filename;
 
-      res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true });
+      res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true, login: req.session.login });
 
     });
   } else {
