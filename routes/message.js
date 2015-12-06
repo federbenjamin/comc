@@ -42,7 +42,17 @@ router.get('/', function(req, res) {
 
 router.post('/writeMessage', function(req, res) {
 	if (req.session.login !== undefined) {
-		res.render('writeMessage', { email: req.body.email });
+		if (req.body.id !== undefined) {
+
+			console.log(req.body);
+			var message = '\n\n\n\n\n\n\n------------------------' + Date() + '\n\n' + req.body.message;
+			var subject = 'RE:' + req.body.subject
+
+			res.render('writeMessage', { email: req.body.sender, message: message, subject: subject });
+		} else {
+			res.render('writeMessage', { email: req.body.email});
+
+		}
 
 	} else {
 		res.redirect('/');
@@ -88,8 +98,7 @@ router.post('/read', function(req, res) {
 			res.render('readMessage', { email: user[0].username, 
 										name: user[0].displayName, 
 										image: user[0].image, 
-										subject: msg[0].subject,
-										message: msg[0].message
+										msg: msg[0]
 									  });
 
 		});

@@ -16,9 +16,13 @@ block content
 						= " " + name
 					P
 						| Subject:
-						= " " + subject
+						= " " + msg.subject
 					hr
-					P.message-box
-						| 
-						= " " + message
-				
+					textarea.textbox-size(readonly) #{msg.message}
+				form(name="writeMessage", action="/message/writeMessage", method="post", id="formID")
+					input(type="hidden", value=msg.id, name="id")
+					input(type="hidden", value=msg.subject, name="subject")
+					input(type="hidden", value=msg.sender, name="sender")
+					input(type="hidden", value=msg.message, name="message")
+					.col-sm-offset-10
+						button.btn.btn-default(type="submit") Reply
