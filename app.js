@@ -19,6 +19,7 @@ var readuserreview = require('./routes/readuserreview');
 var writecomicreview = require('./routes/writecomicreview');
 var readcomicreview = require('./routes/readcomicreview');
 var message = require('./routes/message');
+var rentals = require('./routes/rentals');
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use('/readuserreview', readuserreview);
 app.use('/writecomicreview', writecomicreview);
 app.use('/readcomicreview', readcomicreview);
 app.use('/message', message);
+app.use('/rentals', rentals);
 
 
 // catch 404 and forward to error handler

@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    div(class="container")
+        form(class="form-horizontal", action="/rentals/updateRental", method="post")
+            input(name="comicid", type="hidden", value=comicid)
+            If this comic has been rented, please enter the username of the renter:
+            input(type="text", name="renter")
+            br
+            input(type="submit", value="Submit")
+            br
+        form(class="form-horizontal", action="/rentals/completeRental", method="post")
+            input(name="comicid", type="hidden", value=comicid)
+            label.control-label.col-sm-5.checkbox-inline(type="checkbox")
+                input(type="checkbox", name="status", value="returned")
+                | This comic has been returned
+            input(type="submit", value="Submit")

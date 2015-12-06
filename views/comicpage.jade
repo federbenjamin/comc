@@ -33,16 +33,16 @@ block content
                 br
                 br
                 
-                div(class="span3")
-                    table(class="table table-striped")
-                        thead
-                            tr
-                                th Get this comic
-                        tbody
-                            tr
-                                td Username: 
-                                    = " " + username
-                                td User rating: 
-                                    = "rating"  
+                form(name="findComic", action="/rentals/findComic", method="post")
+                    input(name="comicowner", type="hidden", value=username)
+                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
+                        = "Find this Comic"
+                br
+                br
+                
+                form(name="editRental", action="/rentals/editRental", method="get")
+                    button.btn.btn-default.col-sm-2(type="submit", name="comicid", value=comicid)
+                        = "Update the status of this rental"
+                        
         .col-sm-4
             img(src='/images/comicPics/' + covertitle, height = "80")
