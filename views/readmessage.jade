@@ -4,6 +4,7 @@ block content
 	.body
 		.col-sm-9
 			div.slide-right
+				hr
 				div.float-left
 					img(src = image, height = "80", weight = "80")
 				div
@@ -16,6 +17,8 @@ block content
 					P
 						| Subject:
 						= " " + subject
-					P
-						| Message:
+					hr
+					P.message-box
+						| 
 						= " " + message
+				

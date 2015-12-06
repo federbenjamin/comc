@@ -179,3 +179,11 @@ table#messageList {
   width: 100%;
   height: 500px;
 }
+
+.message-box {
+  padding: 10px;
+  word-wrap: break-word;
+  width: 100%;
+  height: 500px;
+  border: 1px solid blue;
+}

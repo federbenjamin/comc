@@ -33,8 +33,39 @@ block content
 								- var date = new Date();
 								if (mess.date.getDate() == date.getDate() && mess.date.getMonth() == date.getMonth() && mess.date.getFullYear() && date.getFullYear)
 									if (mess.date.getHours() > 12) 
-										| #{mess.date.getHours()-12}:#{mess.date.getMinutes()} PM
+										| #{mess.date.getHours()-12}:
+										if (mess.date.getMinutes() < 10) 
+											| 0#{mess.date.getMinutes()} PM
+										else 
+											| #{mess.date.getMinutes()} PM
 									else
-										| #{mess.date.getHours()}:#{mess.date.getMinutes()} AM
+										| #{mess.date.getHours()}:
+										if (mess.date.getMinutes() < 10) 
+											| 0#{mess.date.getMinutes()} AM
+										else 
+											| #{mess.date.getMinutes()} AM
 								else 
-									| #{mess.date.getMonth()} #{mess.date.getDate()}
+									if (mess.date.getMonth() == 1)
+										| Jan #{mess.date.getDate()}
+									if (mess.date.getMonth() == 2)
+										| Feb #{mess.date.getDate()}
+									if (mess.date.getMonth() == 3)
+										| Mar #{mess.date.getDate()}
+									if (mess.date.getMonth() == 4)
+										| Apr #{mess.date.getDate()}
+									if (mess.date.getMonth() == 5)
+										| May #{mess.date.getDate()}
+									if (mess.date.getMonth() == 6)
+										| Jun #{mess.date.getDate()}
+									if (mess.date.getMonth() == 7)
+										| Jul #{mess.date.getDate()}
+									if (mess.date.getMonth() == 8)
+										| Aug #{mess.date.getDate()}
+									if (mess.date.getMonth() == 9)
+										| Sept #{mess.date.getDate()}
+									if (mess.date.getMonth() == 10)
+										| Oct #{mess.date.getDate()}
+									if (mess.date.getMonth() == 11)
+										| Nov #{mess.date.getDate()}
+									if (mess.date.getMonth() == 12)
+										| Dec #{mess.date.getDate()}
