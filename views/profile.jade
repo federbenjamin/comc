@@ -39,7 +39,17 @@ block content
 						= comic
 				else if (!rented)
 					button.btn.btn-default.col-sm-2(disabled= false)
-						= comic 
+						= comic
+		.col-sm-9
+			br
+			div.slide-right
+				h4 Messages
+				a(href="/message")
+					button.btn.btn-default.col-sm-2
+						= "View Messages"
+				form(name="writeMessage", action="/message/writeMessage", method="post")
+					button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+						= "Write Messages" 
 		.col-sm-9
 			br
 			div.slide-right

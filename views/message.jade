@@ -21,23 +21,20 @@ block content
 					- id++
 					.div
 						form(name="readMessage", action="/message/read", method="post", id=id)
-							input(type="hidden", value=mess.receiver, name="receiver")
-							input(type="hidden", value=mess.sender, name="sender")
-							input(type="hidden", value=mess.date, name="date")
-							tr(onclick="var x = document.getElementById(#{id}).submit();")
-								td(width="10%")
-									a(href="/delete")
-										button.btn.btn-default(type="submit", name="timestamp", value= mess.date.valueOf()) Delete
-								td.align-left
-									| #{mess.sender}
-								td.align-left
-									| #{mess.subject}
-								td.align-right
-									- var date = new Date();
-									if (mess.date.getDate() == date.getDate() && mess.date.getMonth() == date.getMonth() && mess.date.getFullYear() && date.getFullYear)
-										if (mess.date.getHours() > 12) 
-											| #{mess.date.getHours()-12}:#{mess.date.getMinutes()} PM
-										else
-											| #{mess.date.getHours()}:#{mess.date.getMinutes()} AM
-									else 
-										| #{mess.date.getMonth()} #{mess.date.getDate()}
+							input(type="hidden", value=mess.id, name="id")
+						tr(onclick="var x = document.getElementById(#{id}).submit();", form=id)
+							td(width="10%")
+								button.btn.btn-default(type="submit", formaction="/message/delete", form=id) Delete
+							td.align-left
+								| #{mess.sender}
+							td.align-left
+								| #{mess.subject}
+							td.align-right
+								- var date = new Date();
+								if (mess.date.getDate() == date.getDate() && mess.date.getMonth() == date.getMonth() && mess.date.getFullYear() && date.getFullYear)
+									if (mess.date.getHours() > 12) 
+										| #{mess.date.getHours()-12}:#{mess.date.getMinutes()} PM
+									else
+										| #{mess.date.getHours()}:#{mess.date.getMinutes()} AM
+								else 
+									| #{mess.date.getMonth()} #{mess.date.getDate()}

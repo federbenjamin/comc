@@ -5,6 +5,10 @@ var mongoose = require('mongoose');
 
 // Create message collection
 var MessageSchema = mongoose.Schema({
+	id: {
+		type: Number,
+		unique: true
+	},
 	receiver: String,
 	sender: String,
 	subject: {
@@ -18,10 +22,6 @@ var MessageSchema = mongoose.Schema({
 	date: {
 		type: Date,
 		default: Date()
-	},
-	new: {
-		type: Boolean,
-		default: true
 	}
 });
 
@@ -54,11 +54,13 @@ router.post('/writeMessage', function(req, res) {
 // Write message
 router.post('/writeMessage/write', function(req, res) {
 
+	var id = Math.floor(Math.random() * (9999999999 - 0)) + 0;
 	var message = new Messages({
+				id: id,
 				receiver: req.body.user,
 				sender: req.session.login,
 				subject: req.body.subject,
-				message: req.body.message,
+				message: req.body.message
 	});
 
 	message.save(function(err) {
@@ -79,8 +81,8 @@ router.post('/read', function(req, res) {
 
 	console.log(req.body.sender);
 	
-	Messages.find({ receiver: req.body.receiver, sender: req.body.sender, date: req.body.date }, function(err, msg) {
-		Users.find({ username: req.body.sender }, function(err, user) {
+	Messages.find({ id: req.body.id }, function(err, msg) {
+		Users.find({ username: msg[0].sender }, function(err, user) {
 
 			console.log(msg);
 			res.render('readMessage', { email: user[0].username, 
@@ -98,8 +100,23 @@ router.post('/read', function(req, res) {
 
 // Delete message
 router.post('/delete', function(req, res) {
+	console.log("ID: " + req.body.id);
 
+	Messages.find({ id: req.body.id }, function(err, msg) {
+		console.log(msg);
 
+	});
+
+	Messages.remove({ id: req.body.id }, function(err) {    
+		if (err) {
+      		res.status(500).send(err);
+      		console.log(err);
+      		return;
+    	}
+    });
+
+	var back=req.header('Referer') || '/';
+	res.redirect(back);
 });
 
 module.exports = router;
