@@ -254,10 +254,18 @@ router.post('/upload', upload.single('profilePic'), function(req, res) {
   if (typeof req.session.login !== 'undefined'){
     Users.find({username: req.body.email}, function(err, user) {    
       if (user[0].image != '/profilePics/logo.png') {
-        fs.unlink(user[0].image);
+        fs.unlink('./uploads' + user[0].image);
       }
       
       user[0].image = '/profilePics/' + req.file.filename;
+
+      user[0].save(function(err) {
+        if (err) {
+          res.status(500).send(err);
+          console.log(err);
+          return;
+        }
+      });
 
       res.render('edit', { title: 'CURD App', email: req.body.email, passnotempty: true, wrongpassword: false, newpasswordnotempty: true, matching: true, login: req.session.login });
 
