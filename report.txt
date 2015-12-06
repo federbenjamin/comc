@@ -3,12 +3,25 @@ Presented to: Mashiyat Ahmed Shah
 
 Project title: Comc
 
-Joseph Cruz - 
+Joseph Cruz - c4cruzjo
 Samuel Ko - c2kosamu
 Benjamin Feder - g5federb
 Caitlin Guse - c3guseca
 
 Comc is a space where individuals can share comic books with one another. 
-Users can create profiles and upload any number of comic books to their account. Users can search for a desired comic book or view a list of recommendations based on their preferences. 
-Once a comic book is chosen, a user is given the ability to contact another user who has the desired comic book. Users can rate other users based on the manner in which they provided the comic book or the nature of their interaction. Users can also rate comic books based on their enjoyment of the content. 
+
+Users can create profiles and choose their favourite genres of comics via the signup page. Users are also able to login through the index page using their credentials. It was also intended for the user to have the ability to log in via Facebook, but it could not be fully implemented.
+Once users are logged in, they are able to upload any number of comic books to their account through the add comic page. The navigation bar at the top of the window, allows users to quickly add comics, view their profile, or logout as well.
+
+Users are able to edit their profile information and preferences (via the edit page, accessed through their profile page).
+Admin users are able to edit other users' profiles or delete users (as long as these users are not admins/superadmins themselves).
+The superadmin, the first user in the database, has the ability to make other users admins (and revoke admin rights), and has all of the privileges as normal admins.
+Administrative privileges can be exercised by admin accounts when viewing other users' profiles.
+
+Users can search for a desired user or comic book (through the search bar at the homepage or through the search page) or view a list of recommendations based on their preferences (on the homepage). 
+Once a comic book is chosen, a user is given the ability to contact another user who has the desired comic book (through reading and writing messages, accessed through a user's profile).
+Users can rate and comment on other users based on the manner in which they provided the comic book or the nature of their interaction.
+These can be accessed through the write review button in a user's profile. Users are also able to read reviews on other users to help them in determining whether or not to contact them or not.
+Similarly, users can also rate and review comic books based on their enjoyment of the content, accessed through the specific comic's page. 
+
 Overall, Comc provides a service that is tailored to comic book enthusiasts. This prevents users from having to navigate through more general websites that may contain books of any nature. 
