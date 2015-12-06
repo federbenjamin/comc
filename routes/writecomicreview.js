@@ -4,9 +4,11 @@ var session = require('express-session');
 var mongoose = require('mongoose');
 
 var ComicReviewSchema = mongoose.Schema({
-	comicname: String,
-	poster: String,
-	comment: String
+	comicid: String,
+	reviewer: String,
+	comment: String, 
+    rating: Number, 
+    reviewDate: Date
 });
 
 var Users = mongoose.model('Users');
@@ -29,9 +31,11 @@ router.post('/submitComicReview', function(req, res) {
 
   	  // Create a new review
 	  var review = new ComicReviews({
-	    comicname: req.body.comicname,
-	    poster: req.session.login,
-	    comment: req.body.comment
+	    comicid: req.body.comicid,
+	    reviewer: req.session.login,
+	    comment: req.body.comment, 
+        rating: req.body.rating,
+        date: new Date()
 	  });
 
 	  review.save(function(err) {

@@ -1,0 +1,14 @@
+CSC309 H1 F
+Presented to: Mashiyat Ahmed Shah
+
+Project title: Comc
+
+Joseph Cruz - 
+Samuel Ko - c2kosamu
+Benjamin Feder - g5federb
+Caitlin Guse - c3guseca
+
+Comc is a space where individuals can share comic books with one another. 
+Users can create profiles and upload any number of comic books to their account. Users can search for a desired comic book or view a list of recommendations based on their preferences. 
+Once a comic book is chosen, a user is given the ability to contact another user who has the desired comic book. Users can rate other users based on the manner in which they provided the comic book or the nature of their interaction. Users can also rate comic books based on their enjoyment of the content. 
+Overall, Comc provides a service that is tailored to comic book enthusiasts. This prevents users from having to navigate through more general websites that may contain books of any nature. 
