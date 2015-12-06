@@ -44,8 +44,7 @@ var UserSchema = mongoose.Schema({
 	  },
 	  location: String,
 	  rating: {
-	  	type: Number, min: 0, max: 7,
-		default: 0
+	  	type: Number, min: 0, max: 7
 	  },
 	  num_ratings: {
 		type: Number,
@@ -164,7 +163,8 @@ router.post('/register', function(req, res) {
 				level: authLevel,
 				username: req.body.email,
 				password: passEncrypted,
-				displayName: req.body.email
+				displayName: req.body.email,
+				rating: 0
 			});
 			
 			// Save it to the DB.
