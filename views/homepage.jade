@@ -27,6 +27,21 @@ block content
 		div.row
 			h3 Recommendations
 			if recommendation
-				//display each recommendation
+				if length == 0
+					div No recommendations can be made. There are no comics that match your preferences.
+				else
+					table.table.table-striped.table-bordered.table-hover
+						tr
+							th Name
+							th Genre
+						each comic in recommendation
+							tr
+								td 
+									a.tablelink(href='/comicpage') #{comic.name}
+								td
+									if comic.genre
+										a.tablelink(href='/comicpage') #{comic.genre}
+									else
+										a.tablelink(href='/comicpage') N/A
 			else
 				div No recommendations can be made since you have not chosen your favourite genres. Please do so by editing your profile.
