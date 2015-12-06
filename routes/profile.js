@@ -69,7 +69,7 @@ router.get('/', function(req, res, next) {
       queryUser = (req.query.username != undefined ? req.query.username : req.session.login);
       Users.find({username: queryUser}, function(err, user) {
 
-        var rating = (user[0].rating == '' ? 0 : user[0].rating);
+        var rating = user[0].rating;
 
         // Get the current user's authority level
         var access;
@@ -89,6 +89,7 @@ router.get('/', function(req, res, next) {
         } else if (currentUser[0].level == 1 && user[0].level == 2) {
           access = 1;
         }
+	
 		
 		Genres.find({username:user[0].username}, function(err, genreusers){
 			if (err) {

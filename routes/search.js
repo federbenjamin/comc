@@ -48,14 +48,14 @@ router.post('/', function(req, res, next) {
 						console.log(err);
 						return;
 					}
-					if (users.length == 0) res.render('search', {exists: false, searchtype: 'user', searched:req.body.search, login: req.session.login});
+					if (users.length == 0) res.render('search', {title: 'COMC', exists: false, searchtype: 'user', searched:req.body.search, login: req.session.login});
 					else res.render('search', {exists: true, searchtype: 'user', data: users, searched:req.body.search, login: req.session.login});
 				}
 			);
 		}
 		//If comic, search by name, genre or description
 		else if (req.body.searchtype == 'comic'){
-			res.render('search', {searchtype: 'comic', exists: false, searched:req.body.search, login: req.session.login});
+			res.render('search', {title: 'COMC', searchtype: 'comic', exists: false, searched:req.body.search, login: req.session.login});
 			// //Find comic by name or description
 			// Users.find(
 				// //Find users based on email or displayname

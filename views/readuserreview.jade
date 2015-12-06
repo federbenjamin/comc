@@ -6,28 +6,31 @@ block content
 			h1.title.inline.slide-right
 				= "Reviews for " + user
 			ul.slide-right
-				each user in review
-					div
-						label.control-label.underline
-							= "Reviewer:" + " "
-						span #{user.poster}
+				if noreview
+					h5 There are currently no reviews for this user
+				else
+					each user in review
+						div
+							label.control-label.underline
+								= "Reviewer: " + user.username
+							span #{user.poster}
+							br
+							span 
+								each star in [1,2,3,4,5,6,7]
+									if (star <= user.rating)
+										span &#9733
+									else
+										span &#9734
+							br
+							span.word-wrap #{user.comment}
+							br
+							span posted on:
+								| #{user.date}
+							if (authLevel < 2 || user.reviewer == currentUser) 
+								form(name="deleteReview", action="/readuserreview/deleteReview", method="post")
+									input(type="hidden", name="reviewer", value= user.reviewer)
+									input(type="hidden", name="timestamp", value= user.date)
+									input(type="hidden", name="comment", value= user.comment)
+									input(type="hidden", name="rating", value= user.rating)
+									button.btn.btn-default.col-sm-offset-10(type="submit", name="user", value= user.username) Delete Post
 						br
-						span 
-							each star in [1,2,3,4,5,6,7]
-								if (star <= user.rating)
-									span &#9733
-								else
-									span &#9734
-						br
-						span.word-wrap #{user.comment}
-						br
-						span posted on:
-							| #{user.date}
-						if (authLevel < 2 || user.poster == currentUser) 
-							form(name="deleteReview", action="/readuserreview/deleteReview", method="post")
-								input(type="hidden", name="poster", value= user.poster)
-								input(type="hidden", name="timestamp", value= user.date)
-								input(type="hidden", name="comment", value= user.comment)
-								input(type="hidden", name="rating", value= user.rating)
-								button.btn.btn-default.col-sm-offset-10(type="submit", name="user", value= user.username) Delete Post
-					br

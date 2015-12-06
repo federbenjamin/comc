@@ -15,7 +15,6 @@ var ComicReviews = mongoose.model('ComicReviews', ComicReviewSchema);
 router.post('/', function(req, res) {
   if (req.session.login !== 'undefined') {
   	res.render('writeComicReview', { title: 'COMC', comicname: req.body.comicname, comicowner: req.body.comicowner});
-  
   } else {
   	res.redirect('/');
 

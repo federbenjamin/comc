@@ -44,7 +44,8 @@ var UserSchema = mongoose.Schema({
 	  },
 	  location: String,
 	  rating: {
-	  	type: Number, min: 1, max: 7
+	  	type: Number, min: 0, max: 7,
+		default: 0
 	  },
 	  num_ratings: {
 		type: Number,
@@ -122,15 +123,15 @@ router.post('/register', function(req, res) {
 	//console.log(req);
 	if (req.body.email == ''){
 		//Return error if email is empty
-		res.render('signup', { title: 'CURD App', emailnotempty: false, passnotempty: true, matching: true});
+		res.render('signup', { title: 'COMC', emailnotempty: false, passnotempty: true, matching: true});
 	}
 	else if (req.body.password == ''){
 		//Return error if password is empty
-		res.render('signup', { title: 'CURD App', emailnotempty:true, passnotempty: false, matching: true});
+		res.render('signup', { title: 'COMC', emailnotempty:true, passnotempty: false, matching: true});
 	}
 	else if (req.body.password !== req.body.repeatPassword) {
 		//Return error if passwords don't match
-		res.render('signup', { title: 'CURD App', emailnotempty:true, passnotempty: true,matching: false });
+		res.render('signup', { title: 'COMC', emailnotempty:true, passnotempty: true,matching: false });
 	}
 	else {
 		Users.count({}, function(err, count) {
@@ -139,18 +140,20 @@ router.post('/register', function(req, res) {
 				authLevel = 0;
 			}
 
-			for (i = 0; i < req.body.genre.length; i++) {
-				var preference = new Genres({
-					username: req.body.email,
-					genre: req.body.genre[i]
-				});
-				preference.save(function(err) {
-					if (err) {
-						res.status(500).send(err);
-						console.log(err);
-						return;
-					}
-				});
+			if (req.body.genre != null && req.body.genre.length>0){
+				for (i = 0; i < req.body.genre.length; i++) {
+					var preference = new Genres({
+						username: req.body.email,
+						genre: req.body.genre[i]
+					});
+					preference.save(function(err) {
+						if (err) {
+							res.status(500).send(err);
+							console.log(err);
+							return;
+						}
+					});
+				}
 			}
 
 			var passEncrypted = bcrypt.hashSync(req.body.password);
@@ -185,19 +188,19 @@ router.post('/login', function(req, res) {
 	Users.find({username: req.body.email}, function(err, user) {
 		if (req.body.email == ''){
 			//Return error if email is empty
-			res.render('index', { title: 'CURD App', emailnotempty: false, passnotempty: true, userexists: true, matching: true});
+			res.render('index', { title: 'COMC', emailnotempty: false, passnotempty: true, userexists: true, matching: true});
 		}
 		else if (req.body.password == ''){
 			//Return error if password is empty
-			res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: false, userexists: true, matching: true});
+			res.render('index', { title: 'COMC', emailnotempty:true, passnotempty: false, userexists: true, matching: true});
 		}
 		else if (user[0] == null){
 			//Return error if user does not exist
-			res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: true, userexists: false, matching: true });
+			res.render('index', { title: 'COMC', emailnotempty:true, passnotempty: true, userexists: false, matching: true });
 		}
 		else if (!bcrypt.compareSync(req.body.password, user[0].password)) {
 			//Return error if passwords don't match
-			res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: true, userexists: true, matching: false });
+			res.render('index', { title: 'COMC', emailnotempty:true, passnotempty: true, userexists: true, matching: false });
 		} 
 		else {
 			//Store email in a session variable and redirect to homepage if user exists and password is correct

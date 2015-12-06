@@ -10,15 +10,15 @@ router.get('/', function(req, res, next) {
 		username = sess.login;
 		console.log(sess.login);
 		//Render homepage, including recommendations based on user's favourite genres
-		res.render('homepage', { title: 'CURD App', matching: true, login: username});
+		res.render('homepage', { title: 'COMC', matching: true, login: username});
 	}
 	else{
-		res.render('index', { title: 'CURD App', emailnotempty:true, passnotempty: true, userexists: true, matching: true, login: username});
+		res.render('index', { title: 'COMC', emailnotempty:true, passnotempty: true, userexists: true, matching: true, login: username});
 	}
 });
 
 router.get('/signup', function(req, res, next) {
-	res.render('signup', { title: 'CURD App', matching: true, emailnotempty:true, passnotempty:true});
+	res.render('signup', { title: 'COMC', matching: true, emailnotempty:true, passnotempty:true});
 });
 
 router.get('/addcomic', function(req, res, next) {

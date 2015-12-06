@@ -28,7 +28,12 @@ router.post('/', function(req, res) {
 		});
 
 		Reviews.find({ username: userQuery }, function(err, reviews) {
-			res.render('readuserreview', { title: "COMC", review: reviews, user: userQuery, authLevel: authLevel, currentUser: req.session.login});
+			if (!reviews.length){
+				res.render('readuserreview', { title: "COMC", noreview:true, user: userQuery, authLevel: authLevel, currentUser: req.session.login, login: req.session.login});
+			}
+			else{
+				res.render('readuserreview', { title: "COMC", review: reviews, user: userQuery, authLevel: authLevel, currentUser: req.session.login, login: req.session.login});
+			}
 
 		});
 	} else {
@@ -38,22 +43,44 @@ router.post('/', function(req, res) {
 
 });
 
-router.post('/deleteReview', function(req, res) { 
-  Reviews.remove({username: req.body.user, 
-  				  poster: req.body.poster, 
-  				  date: req.body.timestamp,
-  				  comment: req.body.comment,
-  				  rating: req.body.rating}, 
-  				  function(err) {
+router.post('/deleteReview', function(req, res) {
+  //Update ratings
+  Users.find({username: req.body.user}, function(err, user){
     if (err) {
       res.status(500).send(err);
       console.log(err);
       return;
     }
-  });
 	
-  req.session.profileOwner = req.body.user.username;
-  res.redirect('/');
+	if (user[0].num_ratings == 1) user[0].rating = 0;
+	else user[0].rating =  (user[0].num_ratings*user[0].rating - Number(req.body.rating))/(user[0].num_ratings-1);
+	user[0].num_ratings -= 1;
+	
+	user[0].save(function(err) {
+	  if (err) {
+		res.status(500).send(err);
+		console.log(err);
+		return;
+	  }
+	  //Update reviews
+	  Reviews.remove({username: req.body.user, 
+					  reviewer: req.body.reviewer, 
+					  //date: req.body.timestamp,
+					  comment: req.body.comment,
+					  rating: req.body.rating}, 
+					  function(err) {
+		if (err) {
+		  res.status(500).send(err);
+		  console.log(err);
+		  return;
+		}
+	  });
+	});
+  });
+
+	
+  req.session.profileOwner = req.body.user;
+  res.redirect('/profile?username=' + req.session.profileOwner);
 
 });
 
