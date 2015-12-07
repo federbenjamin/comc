@@ -6,6 +6,12 @@ block content
             if exists
                 h2.green Comic Already Exists
                 br
+            if listingAdded
+                h2.green Added Listing for this Comic
+                br
+            if listingExists
+                h2.red You have a Listing for this Comic Already
+                br
 
             h1.title.inline.slide-right 
                 = " " + comicname
@@ -48,16 +54,18 @@ block content
         .col-sm-9
             br
             div.slide-right
+                h4 Listings
+                form(name="addListing", action="/comicpage/addListing", method="post")
+                    button.btn.btn-default.col-sm-4(type="submit", name="comicid", value=id)
+                        = "Add Comic to your Listings"
+
+        .col-sm-9
+            br
+            div.slide-right
 
                 form(name="findComic", action="/rentals/findComic", method="post")
                     button.btn.btn-default.col-sm-2(type="submit", name="comicname", value=comicname)
                         = "Find this Comic"
-                br
-                br
-                
-                form(name="editRental", action="/rentals/editRental", method="get")
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicid", value=id)
-                        = "Update Rental Status"
 
         .col-sm-9
             br

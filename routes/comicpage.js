@@ -23,30 +23,59 @@ router.get('/', function(req, res) {
 		res.redirect('/addcomic');
 	} else {
 		var notNewComic = !!req.query.exists;
+		var newListing = !!req.query.newListing;
+		var listingExists = !!req.query.listingExists;
 		Comics.find({_id: req.query.id}, function(err, comic) {
-			if (!comic[0]) {
+			if (!comic) {
 				res.redirect('/addcomic');
 			} else {
-				res.render('comicpage', {
-                    exists: notNewComic,
-                    comicname: comic[0].title,
-                    authorname: comic[0].author,
-                    coverimage: comic[0].coverimage,
-                    description: comic[0].description,
-                    genre: comic[0].genre,
-                    rating: comic[0].rating,
-                    id: req.query.id,
-					login: req.session.login
-                });
+				Listings.find({comicid: req.query.id}, function(err, listings) {
+					res.render('comicpage', {
+	                    exists: notNewComic,
+	                    listingAdded: newListing,
+	                    listingExists: listingExists,
+	                    comicname: comic[0].title,
+	                    authorname: comic[0].author,
+	                    coverimage: comic[0].coverimage,
+	                    description: comic[0].description,
+	                    genre: comic[0].genre,
+	                    rating: comic[0].rating,
+	                    id: req.query.id,
+	                    comicowners: listings,
+	                    login: req.session.login
+	                });
+				});
 			}
 		});
 	}
 });
-/*
-router.post('/edit', function(req, res) {
-	res.redirect('/comicpage?id=' + req.body.comicid);
+
+router.post('/addListing', function(req, res) {
+	if (typeof req.session.login !== 'undefined'){
+		Listings.find({$and: [{comicid: req.body.comicid}, {username: req.session.login}]}, function(err, listings) {
+			if (listings[0]) {
+				res.redirect('/comicpage?id=' + req.body.comicid + '&listingExists=1');
+			} else {
+				var listing = new Listings({
+					comicid: req.body.comicid,
+					username: req.session.login
+				});
+				// Save it to the DB.
+                listing.save(function(err) {
+                    if (err) {
+                        res.status(500).send(err);
+                        console.log(err);
+                        return;
+                    }
+					res.redirect('/comicpage?id=' + req.body.comicid + '&newListing=1');
+				});
+			}
+		});
+	} else {
+		res.redirect('/');
+	}
 });
-*/
+
 router.post('/edit', function(req, res) {
 	if (typeof req.session.login !== 'undefined'){
 		Comics.find({_id: req.body.comicid}, function(err, comic) {
