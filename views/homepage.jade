@@ -32,16 +32,16 @@ block content
 				else
 					table.table.table-striped.table-bordered.table-hover
 						tr
-							th Name
+							th Comic Name
+							th Author
 							th Genre
 						each comic in recommendation
 							tr
 								td 
-									a.tablelink(href='/comicpage') #{comic.name}
+									a.tablelink(href='/comicpage?id=#{comic._id}') #{comic.title}
+								td 
+									a.tablelink(href='/comicpage?id=#{comic._id}') #{comic.author}
 								td
-									if comic.genre
-										a.tablelink(href='/comicpage') #{comic.genre}
-									else
-										a.tablelink(href='/comicpage') N/A
+									a.tablelink(href='/comicpage?id=#{comic._id}') #{comic.genre}
 			else
 				div No recommendations can be made since you have not chosen your favourite genres. Please do so by editing your profile.

@@ -30,8 +30,6 @@ router.post('/submitComicReview', function(req, res) {
 		res.render('writeComicReview', { title: 'COMC', comicid: req.body.comicid, comicname: req.body.comicname, login: req.session.login, norating: true});
 	}
 	else{
-		console.log(req.body.comicid);
-		console.log('here');
 		Comics.find({_id: req.body.comicid}, function(err, comic) {
 		  comic[0].num_ratings += 1;
 		  comic[0].rating = ((comic[0].rating * (comic[0].num_ratings -1)) + Number(req.body.rating))/(comic[0].num_ratings);
