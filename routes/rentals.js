@@ -3,8 +3,7 @@ var router = express.Router();
 var session = require('express-session');  
 var mongoose = require('mongoose');
 
-// Create message collection
-var RentalSchema = mongoose.Schema({
+/*var RentalSchema = mongoose.Schema({
 	id: {
 		type: Number,
 		unique: true
@@ -16,8 +15,8 @@ var RentalSchema = mongoose.Schema({
     is_returned: Boolean,
     date_returned: Date
 });
-
-var Rentals = mongoose.model('Rentals', RentalSchema);
+*/
+var Rentals = mongoose.model('Rentals');
 var Users = mongoose.model('Users');
 
 //rentals are created in addcomic when a comic is added

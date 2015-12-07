@@ -44,7 +44,7 @@ router.get('/', function(req, res) {
 
 router.post('/edit', function(req, res) {
 	res.redirect('/comicpage?id=' + req.body.comicid);
-}
+});
 
 router.post('/edit', function(req, res) {
 	if (typeof req.session.login !== 'undefined'){

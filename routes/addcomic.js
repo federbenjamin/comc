@@ -27,8 +27,23 @@ var ComicSchema = mongoose.Schema({
         default: 0
       },
 });
+
+var RentalSchema = mongoose.Schema({
+	id: {
+		type: Number,
+		unique: true
+	},
+	renter: String,
+	comic_id: Number,
+	is_rented: Boolean,
+	date_rented: Date, 
+    is_returned: Boolean,
+    date_returned: Date
+});
+
 // Creates the model for Comics
 var Comics = mongoose.model('Comics', ComicSchema);
+var Rentals = mongoose.model('Rentals', RentalSchema);
 
 
 router.post('/addedcomic', function(req, res) {
@@ -43,6 +58,7 @@ router.post('/addedcomic', function(req, res) {
             if (comic[0]) {
                 res.redirect('/comicpage?id=' + comic[0]._id.valueOf() + '&exists=true');
             } else {
+                    
                 var desc = (req.body.comicdescription ? req.body.comicdescription : "No Description Available");
                 var comicgenre = (req.body.comicgenre ? req.body.comicgenre : "N/A");
                 // Instanitate the model.
@@ -61,6 +77,13 @@ router.post('/addedcomic', function(req, res) {
                         console.log(err);
                         return;
                     }
+                    
+                    var rental = new Rentals({
+                        comic_id: comic._id,
+                        is_rented: false
+                    });
+                    rental.save();
+                    
 
                     // If everything is OK, then we return the information in the response.
                     Comics.find({$and: [{title: comic.title}, {author: comic.author}] }, function(err, comic) {
