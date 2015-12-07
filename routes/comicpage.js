@@ -53,15 +53,17 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.post('/upload', upload.single('comiccover'), function(req, res) {
-	console.log(req.body);
-    // Comics.find({username: req.body.login}, function(err, user) {
-    //     user[0].comic.covertitle = req.file.filename;
-    //     user[0].save();
-    //     res.render('addcomic', {
-    //         covertitle: user[0].comic.covertitle,
-    //         login: req.body.login
-    //     }); 
-    // }); 
+	var comicID = /(id=)([^&]*)/.exec(req.headers.referer)[2];
+	if (!comicID) {
+		res.redirect('/');
+	}
+    Comics.find({_id: comicID}, function(err, comic) {
+		if (!!req.file) {
+	        comic[0].coverimage = req.file.filename;
+	        comic[0].save();
+        }
+        res.redirect('/comicpage?id=' + comic[0]._id.valueOf());
+    });
 });
 
 router.get('/reviews', function(req, res, next) {
