@@ -1,25 +1,43 @@
 extends layout
 
 block content
-    .body
-        .col-sm-8
-            h1.title.inline 
+    .body.center
+        .col-sm-4
+            h1.title.inline.slide-right 
                 = " " + comicname
-            span 
-            span &#9734
-            span &#9734
-            span &#9734
-            span &#9734
-            span &#9734
-            span &#9734
-            span &#9734
-            div(id="centered")
+                span 
+                    each star in [1,2,3,4,5,6,7]
+                        if (star <= rating)
+                            span &#9733
+                        else
+                            span &#9734
+        .col-sm-9
+            div.slide-right
+                div.float-left
+                     img(src='/images/comicPics/' + coverimage, height="80")
                 div
-                    p Author: 
-                        = authorname
-                    p Description:
+                    p
+                        | Author: 
+                        = " " + authorname
+                    P
+                        | Genre:
+                        = " " + genre
+                    p
+                        | Description:
                         = " " + description
-                
+                    
+                form(class="form-horizontal", action="/comicpage/upload", method="post", enctype="multipart/form-data")
+                    input(name="login", type="hidden", value=login)
+                    div(class="form-group")
+                        label(class="control-label col-sm-2", for="comiccover") Select an image to upload:
+                        div(class="col-sm-10")
+                            input(type="file", name="comiccover") 
+                            br
+                            input(type="submit", value="Upload Image")
+
+          
+            div(id="centered")
+              
                 form(name="writeReview", action="/readComicReview", method="post")
                     button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
                         = "Read Review"
@@ -44,5 +62,3 @@ block content
                     button.btn.btn-default.col-sm-2(type="submit", name="comicid", value=comicid)
                         = "Update the status of this rental"
                         
-        .col-sm-4
-            img(src='/images/comicPics/' + covertitle, height = "80")

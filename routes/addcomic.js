@@ -18,10 +18,7 @@ var ComicSchema = mongoose.Schema({
         default: "no-cover.jpg"
       },
       description: String,
-      genre: {
-        type: String,
-        default: "None"
-      },
+      genre: String,
       rating: {
         type: Number, min: 0, max: 7
       },
@@ -47,12 +44,13 @@ router.post('/addedcomic', function(req, res) {
                 res.redirect('/comicpage?id=' + comic[0]._id.valueOf() + '&exists=true');
             } else {
                 var desc = (req.body.comicdescription ? req.body.comicdescription : "No Description Available");
+                var comicgenre = (req.body.comicgenre ? req.body.comicgenre : "None Selected");
                 // Instanitate the model.
                 var comic = new Comics({
                     title: req.body.comictitle,
                     author: req.body.comicauthor,
                     description: desc,
-                    genre: req.body.comicgenre,
+                    genre: comicgenre,
                     rating: 0
                 });
 
