@@ -44,7 +44,7 @@ router.post('/addedcomic', function(req, res) {
                 res.redirect('/comicpage?id=' + comic[0]._id.valueOf() + '&exists=true');
             } else {
                 var desc = (req.body.comicdescription ? req.body.comicdescription : "No Description Available");
-                var comicgenre = (req.body.comicgenre ? req.body.comicgenre : "None Selected");
+                var comicgenre = (req.body.comicgenre ? req.body.comicgenre : "N/A");
                 // Instanitate the model.
                 var comic = new Comics({
                     title: req.body.comictitle,
