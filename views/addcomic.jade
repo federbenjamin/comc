@@ -3,30 +3,70 @@ extends layout
 block content
     .body
         div(class="container")
-            if covertitle
-                img(src='/images/comicPics/' + covertitle, height="80")
-                
-            form(class="form-horizontal", action="/addcomic/upload", method="post", enctype="multipart/form-data")
-                input(name="login", type="hidden", value=login)
-                div(class="form-group")
-                    label(class="control-label col-sm-2", for="comicname") Select an image to upload:
-                    div(class="col-sm-10")
-                        input(type="file", name="comiccover") 
-                        br
-                        input(type="submit", value="Upload Image")
-            
+
+            h1 Add Comic
+
             form(class="form-horizontal", role="form", method="post", action="/addcomic/addedcomic")
                 input(name="login", type="hidden", value=login)
                 div(class="form-group")
-                    label(class="control-label col-sm-2", for="comicname") Comic Name:
+                    label(class="control-label col-sm-2", for="comictitle") Comic Title:
                     div(class="col-sm-10")
-                        input(type="email", class="form-control", name="comicname", placeholder="Enter name")
+                        input(type="text", class="form-control", name="comictitle", placeholder="Enter title")
                 
+                div(class="form-group")
+                    label(class="control-label col-sm-2", for="comicauthor") Comic Author:
+                    div(class="col-sm-10")
+                        input(type="text", class="form-control", name="comicauthor", placeholder="Enter author")
+
                 div(class="form-group")
                     label(class="control-label col-sm-2", for="comicdescription") Comic Description:
                     div(class="col-sm-10")
-                        input(type="email", class="form-control", name="comicdescription", placeholder="Enter description")
-                        
-                div(class="form-group")
+                        input(type="text", class="form-control", name="comicdescription", placeholder="Enter description")
+
+                div.row
+                    label.control-label.col-sm-2 Comic genre:
+                div.row
+                    label.control-label.col-sm-3.checkbox-inline(type="checkbox") 
+                        input(type="radio", name="comicgenre", value="adventure")
+                        | &nbsp;Adventure
+                    label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+                        input(type="radio", name="comicgenre", value="action") 
+                        | &nbsp;Action
+                    label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+                        input(type="radio", name="comicgenre", value="comedy") 
+                        | &nbsp;Comedy
+                div.row
+                    label.control-label.col-sm-3.checkbox-inline(type="checkbox") 
+                        input(type="radio", name="comicgenre", value="crime")
+                        | &nbsp;Crime
+                    label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+                        input(type="radio", name="comicgenre", value="drama") 
+                        | &nbsp;Drama
+                    label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+                        input(type="radio", name="comicgenre", value="fantasy") 
+                        | &nbsp;Fantasy
+                div.row
+                    label.control-label.col-sm-3.checkbox-inline(type="checkbox") 
+                        input(type="radio", name="comicgenre", value="horror")
+                        | &nbsp;Horror
+                    label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+                        input(type="radio", name="comicgenre", value="mystery") 
+                        | &nbsp;Mystery
+                    label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+                        input(type="radio", name="comicgenre", value="nonfiction") 
+                        | &nbsp;Non-Fiction
+                div.row
+                    label.control-label.col-sm-3.checkbox-inline(type="checkbox") 
+                        input(type="radio", name="comicgenre", value="romance")
+                        | &nbsp;Romance
+                    label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+                        input(type="radio", name="comicgenre", value="scifi") 
+                        | &nbsp;Sci-Fi
+                    label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+                        input(type="radio", name="comicgenre", value="psychological") 
+                        | &nbsp;Psychological
+
+                div.center(class="form-group")
                     div(class="col-sm-offset-2 col-sm-10")
                         input(type="submit", class="btn btn-default", method="post", action="/addcomic/addedcomic", value="Submit")
+                            
