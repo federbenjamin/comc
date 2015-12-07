@@ -37,10 +37,12 @@ block content
             div.slide-right
                 h4 Reviews
                 form(name="readReview", action="/readComicReview", method="post")
-                    button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+                    input(name="comicid", type="hidden", value=id)
+                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
                         = "Read Review"
                 form(name="writeReview", action="/writeComicReview", method="post")
-                    button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+                    input(name="comicid", type="hidden", value=id)
+                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
                         = "Write Review"
 
         .col-sm-9

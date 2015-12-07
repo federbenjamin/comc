@@ -35,7 +35,8 @@ router.get('/', function(req, res) {
                     description: comic[0].description,
                     genre: comic[0].genre,
                     rating: comic[0].rating,
-                    id: req.query.id
+                    id: req.query.id,
+					login: req.session.login
                 });
 			}
 		});
@@ -44,14 +45,15 @@ router.get('/', function(req, res) {
 
 router.post('/edit', function(req, res) {
 	res.redirect('/comicpage?id=' + req.body.comicid);
-}
+});
 
 router.post('/edit', function(req, res) {
 	if (typeof req.session.login !== 'undefined'){
 		Comics.find({_id: req.body.comicid}, function(err, comic) {
 			res.render('editcomic', {id: req.body.comicid,
 									title: comic[0].title,
-                    				author: comic[0].author
+                    				author: comic[0].author,
+									login: req.session.login
             });
 		});
 	} else {
