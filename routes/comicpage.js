@@ -46,7 +46,7 @@ router.get('/', function(req, res, next) {
 router.post('/edit', function(req, res, next) {
 	if (typeof req.session.login !== 'undefined'){
 		Comics.find({_id: req.body.comicid}, function(err, comic) {
-			res.render('editcomic', {id: req.body.comicid, 
+			res.render('editcomic', {id: req.body.comicid,
 									title: comic[0].title,
                     				author: comic[0].author
             });
@@ -76,6 +76,32 @@ router.post('/upload', upload.single('comiccover'), function(req, res) {
 	        }
 	        res.redirect('/comicpage?id=' + comic[0]._id.valueOf());
 	    });
+	} else {
+		res.redirect('/');
+	}
+});
+
+router.post('/updatecomic', function(req, res, next) {
+	if (typeof req.session.login !== 'undefined') {
+		Comics.find({_id: req.body.comicid}, function(err, comic) {
+			// Change the description
+			if (req.body.description != '') {
+				comic[0].description = req.body.description;
+			}
+			// Change the Genre
+			if (req.body.comicgenre != null) {
+				comic[0].genre = req.body.comicgenre;
+			}
+			// Save it to the DB.
+			comic[0].save(function(err) {
+				if (err) {
+					res.status(500).send(err);
+					console.log(err);
+					return;
+				}
+			});
+		});
+		res.redirect('/comicpage?id=' + req.body.comicid);
 	} else {
 		res.redirect('/');
 	}
