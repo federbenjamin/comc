@@ -19,43 +19,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-/*
-mongoose.connect('mongodb://localhost:27017/', {
-  user: '',
-  pass: ''
-});
 
-
-// Check the status of this connection
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-  console.log('Connected to MongoDB');
-});
-*/
-/*
-var Schema = mongoose.Schema;
-var Users = mongoose.model('Users', new Schema({
-  level: Number,
-  username: {
-    type: String,
-    unique: true
-  },
-  password: String,
-  image: {
-    type: String,
-    required: false
-  },
-  description: String,
-  displayName: {
-    type: String,
-    unique: true
-  },
-  comic: String,
-  rented: Boolean,
-  rating: Number
-}), 'users');
-*/
 var Users = mongoose.model('Users');
 var Genres = mongoose.model('Genres');
 
