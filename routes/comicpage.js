@@ -42,11 +42,11 @@ router.get('/', function(req, res) {
 		});
 	}
 });
-
+/*
 router.post('/edit', function(req, res) {
 	res.redirect('/comicpage?id=' + req.body.comicid);
 });
-
+*/
 router.post('/edit', function(req, res) {
 	if (typeof req.session.login !== 'undefined'){
 		Comics.find({_id: req.body.comicid}, function(err, comic) {
