@@ -35,9 +35,24 @@ router.get('/', function(req, res, next) {
                     description: comic[0].description,
                     genre: comic[0].genre,
                     rating: comic[0].rating,
+                    id: req.query.id
                 });
 			}
 		});
+	}
+});
+
+
+router.post('/edit', function(req, res, next) {
+	if (typeof req.session.login !== 'undefined'){
+		Comics.find({_id: req.body.comicid}, function(err, comic) {
+			res.render('editcomic', {id: req.body.comicid, 
+									title: comic[0].title,
+                    				author: comic[0].author
+            });
+		});
+	} else {
+		res.redirect('/');
 	}
 });
 
@@ -53,17 +68,17 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.post('/upload', upload.single('comiccover'), function(req, res) {
-	var comicID = /(id=)([^&]*)/.exec(req.headers.referer)[2];
-	if (!comicID) {
+	if (typeof req.session.login !== 'undefined'){
+	    Comics.find({_id: req.body.comicid}, function(err, comic) {
+			if (!!req.file) {
+		        comic[0].coverimage = req.file.filename;
+		        comic[0].save();
+	        }
+	        res.redirect('/comicpage?id=' + comic[0]._id.valueOf());
+	    });
+	} else {
 		res.redirect('/');
 	}
-    Comics.find({_id: comicID}, function(err, comic) {
-		if (!!req.file) {
-	        comic[0].coverimage = req.file.filename;
-	        comic[0].save();
-        }
-        res.redirect('/comicpage?id=' + comic[0]._id.valueOf());
-    });
 });
 
 router.get('/reviews', function(req, res, next) {

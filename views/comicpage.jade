@@ -16,15 +16,7 @@ block content
             div.slide-right
                 div.float-left.sol-sm-3
                     img(src='/images/comicPics/' + coverimage, height="80")
-                form(class="form-horizontal", action="/comicpage/upload", method="post", enctype="multipart/form-data")
-                    input(name="login", type="hidden", value=login)
-                    div(class="form-group")
-                        label(class="control-label col-sm-2", for="comiccover") Select an image to upload:
-                        div(class="col-sm-10")
-                            input(type="file", name="comiccover") 
-                            br
-                            input(type="submit", value="Upload Image")
-        .col-sm-9
+
             div.slide-right
                 p
                     | Author:
@@ -62,3 +54,9 @@ block content
                     button.btn.btn-default.col-sm-2(type="submit", name="comicid", value=comicid)
                         = "Update Rental Status"
 
+        .col-sm-9
+            br
+            div.slide-right
+                h4 Edit Profile
+                form(name="getEdit", action="/comicpage/edit", method="post")
+                    button.btn.btn-default.col-sm-2(name= "comicid", value=id) Edit

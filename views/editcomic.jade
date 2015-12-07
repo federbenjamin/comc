@@ -1,0 +1,75 @@
+extends layout
+
+block content
+	.body
+		.col-sm-6
+			h1.title.inline.slide-right
+				= "Edit Comic Book"
+
+			form.slide-right(method="post", action="/comicpage/upload", enctype="multipart/form-data")
+				input(type="hidden", name="comicid", value=id, readonly=true)
+				label.control-label Change Comic Book Cover
+				br
+				br
+				input(type="file", name="comiccover")
+				br
+				input.btn.btn-default.col-sm-offset-10(type="submit")
+				br
+				br
+
+			form.slide-right(name="editComic", action="/comicpage/updatecomic", method="post")
+				input(type="hidden", name="comicid", value=id, readonly=true)
+				label.control-label Title: 
+				input.form-control(type="text", name="email", readonly=true, value=title)
+				br
+				label.control-label Author: 
+				input.form-control(type="text", name="email", readonly=true, value=author)
+				br
+				label.control-label Description: 
+				input.form-control(type="text", name="description")
+				br
+				div.row
+					label.control-label.col-sm-2 Comic genre:
+				div.row
+					label.control-label.col-sm-3.checkbox-inline(type="checkbox") 
+						input(type="radio", name="comicgenre", value="adventure")
+						| &nbsp;Adventure
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="radio", name="comicgenre", value="action") 
+						| &nbsp;Action
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="radio", name="comicgenre", value="comedy") 
+						| &nbsp;Comedy
+				div.row
+					label.control-label.col-sm-3.checkbox-inline(type="checkbox") 
+						input(type="radio", name="comicgenre", value="crime")
+						| &nbsp;Crime
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="radio", name="comicgenre", value="drama") 
+						| &nbsp;Drama
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="radio", name="comicgenre", value="fantasy") 
+						| &nbsp;Fantasy
+				div.row
+					label.control-label.col-sm-3.checkbox-inline(type="checkbox") 
+						input(type="radio", name="comicgenre", value="horror")
+						| &nbsp;Horror
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="radio", name="comicgenre", value="mystery") 
+						| &nbsp;Mystery
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="radio", name="comicgenre", value="nonfiction") 
+						| &nbsp;Non-Fiction
+				div.row
+					label.control-label.col-sm-3.checkbox-inline(type="checkbox") 
+						input(type="radio", name="comicgenre", value="romance")
+						| &nbsp;Romance
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="radio", name="comicgenre", value="scifi") 
+						| &nbsp;Sci-Fi
+					label.control-label.col-sm-2.checkbox-inline(type="checkbox")
+						input(type="radio", name="comicgenre", value="psychological") 
+						| &nbsp;Psychological
+				br
+				input.btn.btn-default.col-sm-4(type="submit" value="Update")
+				button.btn.btn-default.col-sm-4(onclick="window.history.back()", style="float: right") Back
