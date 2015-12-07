@@ -27,7 +27,7 @@ router.get('/', function(req, res, next) {
 				for (i = 0; i < user.length.i++){
 					query.or([{genre: user[i].genre}]);
 				}
-				query.sort({rating: -1}).exec(function(err, comics){
+				query.limit(10).sort({rating: -1}).exec(function(err, comics){
 					if (err) {
 					  res.status(500).send(err);
 					  console.log(err);
