@@ -47,4 +47,19 @@ router.post('/completeRental', function(req, res) {
     res.redirect('/');
 });
 
+router.post('/findComic', function(req, res) {
+    Rentals.find({comictitle: req.body.comicname }, function(err, rental) {
+        if (rental[0].is_rented == false) {
+            res.render('findComic', {
+                renter: rental[0].renter
+            });
+        }
+        else {
+            res.render('findComic', {
+                rented: true
+            });
+        }
+    });
+});
+
 module.exports = router;

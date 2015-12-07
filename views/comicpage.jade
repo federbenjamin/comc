@@ -48,8 +48,7 @@ block content
             div.slide-right
 
                 form(name="findComic", action="/rentals/findComic", method="post")
-                    input(name="comicowner", type="hidden", value=username)
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
+                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value=comicname)
                         = "Find this Comic"
                 br
                 br

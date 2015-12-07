@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    .body
+        if rented
+            p Sorry, but this comic is currently unavailable. 
+            
+        else
+            p
+                | Renter:
+                = " " + renter

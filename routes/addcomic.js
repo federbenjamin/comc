@@ -26,19 +26,16 @@ var ComicSchema = mongoose.Schema({
         type: Number,
         default: 0
       },
+      owner: String
 });
 
 var RentalSchema = mongoose.Schema({
-	id: {
-		type: Number,
-		unique: true
-	},
 	renter: String,
-	comic_id: Number,
 	is_rented: Boolean,
 	date_rented: Date, 
     is_returned: Boolean,
-    date_returned: Date
+    date_returned: Date, 
+    comictitle: String
 });
 
 // Creates the model for Comics
@@ -67,7 +64,8 @@ router.post('/addedcomic', function(req, res) {
                     author: req.body.comicauthor,
                     description: desc,
                     genre: comicgenre,
-                    rating: 0
+                    rating: 0, 
+                    owner: req.body.login
                 });
 
                 // Save it to the DB.
@@ -79,10 +77,18 @@ router.post('/addedcomic', function(req, res) {
                     }
                     
                     var rental = new Rentals({
-                        comic_id: comic._id,
+                        comictitle: comic.title,
+                        renter: comic.owner,
                         is_rented: false
                     });
-                    rental.save();
+                    
+                    rental.save(function(err) {
+                        if (err) {
+                            res.status(500).send(err);
+                            console.log(err);
+                            return;
+                        }
+                    });
                     
 
                     // If everything is OK, then we return the information in the response.
