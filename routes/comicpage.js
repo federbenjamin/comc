@@ -11,8 +11,17 @@ var Comics = mongoose.model('Comics');
 
 // Define Listing schema
 var ListingSchema = mongoose.Schema({
-      username: String,
-      comicid: String
+	owner: String,
+	comicid: String,
+	renter: {
+		type: String,
+		default: "N/A"
+	},
+	isrented: {
+		type: Boolean,
+		default: false
+	},
+	daterented: Date
 });
 // Creates the model for Listings
 var Listings = mongoose.model('Listings', ListingSchema);
@@ -29,7 +38,7 @@ router.get('/', function(req, res) {
 			if (!comic) {
 				res.redirect('/addcomic');
 			} else {
-				Listings.find({comicid: req.query.id}, function(err, listings) {
+				Listings.find({comicid: req.query.id}, 'owner isrented', function(err, listings) {
 					res.render('comicpage', {
 	                    exists: notNewComic,
 	                    listingAdded: newListing,
@@ -52,13 +61,13 @@ router.get('/', function(req, res) {
 
 router.post('/addListing', function(req, res) {
 	if (typeof req.session.login !== 'undefined'){
-		Listings.find({$and: [{comicid: req.body.comicid}, {username: req.session.login}]}, function(err, listings) {
+		Listings.find({$and: [{comicid: req.body.comicid}, {owner: req.session.login}]}, function(err, listings) {
 			if (listings[0]) {
 				res.redirect('/comicpage?id=' + req.body.comicid + '&listingExists=1');
 			} else {
 				var listing = new Listings({
 					comicid: req.body.comicid,
-					username: req.session.login
+					owner: req.session.login
 				});
 				// Save it to the DB.
                 listing.save(function(err) {

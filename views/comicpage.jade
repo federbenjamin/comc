@@ -59,13 +59,23 @@ block content
                     button.btn.btn-default.col-sm-4(type="submit", name="comicid", value=id)
                         = "Add Comic to your Listings"
 
-        .col-sm-9
-            br
-            div.slide-right
-
-                form(name="findComic", action="/rentals/findComic", method="post")
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value=comicname)
-                        = "Find this Comic"
+                div.row.listingbox
+                    if comicowners != false
+                        table.table.table-striped.table-bordered.table-hover
+                            tr
+                                th Owner
+                                th Available
+                            each listing in comicowners
+                                tr
+                                    td
+                                        a.tablelink(href='/profile?username=#{listing.owner}') #{listing.owner}
+                                    if listing.isrented
+                                        td.red Rented
+                                    else
+                                        td
+                                            a.tablelink.green(href='/profile?username=#{listing.owner}') Available
+                    else
+                        h5.red No listed copies can be found
 
         .col-sm-9
             br

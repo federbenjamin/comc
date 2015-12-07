@@ -201,3 +201,7 @@ table#messageList {
 .red {
   color: red;
 }
+
+.listingbox {
+  padding-top: 50px;
+}
