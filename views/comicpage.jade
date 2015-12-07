@@ -2,7 +2,11 @@ extends layout
 
 block content
     .body.center
-        .col-sm-9
+        .col-sm-4
+            if exists
+                h2.green Comic Already Exists
+                br
+
             h1.title.inline.slide-right 
                 = " " + comicname
                 br

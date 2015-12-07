@@ -18,7 +18,7 @@ var ListingSchema = mongoose.Schema({
 var Listings = mongoose.model('Listings', ListingSchema);
 
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
 	if (!req.query.id) {
 		res.redirect('/addcomic');
 	} else {
@@ -42,8 +42,11 @@ router.get('/', function(req, res, next) {
 	}
 });
 
+router.post('/edit', function(req, res) {
+	res.redirect('/comicpage?id=' + req.body.comicid);
+}
 
-router.post('/edit', function(req, res, next) {
+router.post('/edit', function(req, res) {
 	if (typeof req.session.login !== 'undefined'){
 		Comics.find({_id: req.body.comicid}, function(err, comic) {
 			res.render('editcomic', {id: req.body.comicid,
@@ -81,7 +84,7 @@ router.post('/upload', upload.single('comiccover'), function(req, res) {
 	}
 });
 
-router.post('/updatecomic', function(req, res, next) {
+router.post('/updatecomic', function(req, res) {
 	if (typeof req.session.login !== 'undefined') {
 		Comics.find({_id: req.body.comicid}, function(err, comic) {
 			// Change the description
