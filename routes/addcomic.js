@@ -8,69 +8,70 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var bcrypt = require('bcrypt-nodejs');
 
-mongoose.connect('mongodb://localhost:27017/', {
-  user: '',
-  pass: ''
+
+// Define Comic schema
+var ComicSchema = mongoose.Schema({
+      title: String,
+      author: String,
+      coverimage: {
+        type: String,
+        default: "no-cover.jpg"
+      },
+      description: String,
+      genre: {
+        type: String,
+        default: "None"
+      },
+      rating: {
+        type: Number, min: 0, max: 7
+      },
+      num_ratings: {
+        type: Number,
+        default: 0
+      },
 });
+// Creates the model for Comics
+var Comics = mongoose.model('Comics', ComicSchema);
 
-
-// Check the status of this connection
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-  console.log('Connected to MongoDB');
-});
-
-var Users = mongoose.model('Users');
 
 router.post('/addedcomic', function(req, res) {
 	if (req.body.comicname == ''){
 		res.render('addcomic');
 	}
-	else if (req.body.comicdescription == ''){
+	else if (req.body.comicauthor == ''){
 		res.render('addcomic');
 	}
-    
 	else {
-        Users.find({username: req.body.login}, function(err, user) {
-            user[0].comic.name = req.body.comicname;
-            user[0].comic.description = req.body.comicdescription;
-            user[0].save();
-            res.render('comicpage', {
-                description: user[0].comic.description, 
-                comicname: user[0].comic.name, 
-                username: user[0].username, 
-                covertitle: user[0].comic.covertitle
-            });
+        Comics.find({$and: [{title: req.body.comictitle}, {author: req.body.comicauthor}] }, function(err, comic) {
+            if (comic[0]) {
+                res.redirect('/comicpage?id=' + comic[0]._id.valueOf() + '&exists=true');
+            } else {
+                var desc = (req.body.comicdescription ? req.body.comicdescription : "No Description Available");
+                // Instanitate the model.
+                var comic = new Comics({
+                    title: req.body.comictitle,
+                    author: req.body.comicauthor,
+                    description: desc,
+                    genre: req.body.comicgenre,
+                    rating: 0
+                });
+
+                // Save it to the DB.
+                comic.save(function(err) {
+                    if (err) {
+                        res.status(500).send(err);
+                        console.log(err);
+                        return;
+                    }
+
+                    // If everything is OK, then we return the information in the response.
+                    Comics.find({$and: [{title: comic.title}, {author: comic.author}] }, function(err, comic) {
+                        res.redirect('/comicpage?id=' + comic[0]._id.valueOf());
+                    });
+                });
+            }
         });
 	}
 });
-
-router.get('/comicpage', function(req, res) {
-    res.render('comicpage');
-});
-
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/images/comicPics');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now()+'.png');
-  }
-});
-
-var upload = multer({ storage: storage });
-
-router.post('/upload', upload.single('comiccover'), function(req, res) {
-    Users.find({username: req.body.login}, function(err, user) {
-        user[0].comic.covertitle = req.file.filename;
-        user[0].save();
-        res.render('addcomic', {
-            covertitle: user[0].comic.covertitle,
-            login: req.body.login
-        }); 
-    }); 
-});
-
 
 module.exports = router;
