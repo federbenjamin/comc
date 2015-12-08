@@ -2,9 +2,15 @@ extends layout
 
 block content
     .body.center
-        .col-sm-4
+        .col-sm-5
             if exists
                 h2.green Comic Already Exists
+                br
+            if listingAdded
+                h2.green Added Listing for this Comic
+                br
+            if listingExists
+                h2.red You have a Listing for this Comic Already
                 br
 
             h1.title.inline.slide-right 
@@ -38,30 +44,42 @@ block content
                 h4 Reviews
                 form(name="readReview", action="/readComicReview", method="post")
                     input(name="comicid", type="hidden", value=id)
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
+                    button.btn.btn-default.col-sm-3(type="submit", name="comicname", value= comicname)
                         = "Read Review"
                 form(name="writeReview", action="/writeComicReview", method="post")
                     input(name="comicid", type="hidden", value=id)
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
+                    button.btn.btn-default.col-sm-3(type="submit", name="comicname", value= comicname)
                         = "Write Review"
 
         .col-sm-9
             br
             div.slide-right
+                h4 Listings
+                form(name="addListing", action="/comicpage/addListing", method="post")
+                    button.btn.btn-default.col-sm-6(type="submit", name="comicid", value=id)
+                        = "Add Comic to your Listings"
 
-                form(name="findComic", action="/rentals/findComic", method="post")
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value=comicname)
-                        = "Find this Comic"
-                br
-                br
-                
-                form(name="editRental", action="/rentals/editRental", method="get")
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicid", value=id)
-                        = "Update Rental Status"
+                div.row.listingbox
+                    if comicowners != false
+                        table.table.table-striped.table-bordered.table-hover
+                            tr
+                                th Owner
+                                th Availability
+                            each listing in comicowners
+                                tr
+                                    td
+                                        a.tablelink(href='/profile?username=#{listing.owner}') #{listing.owner}
+                                    if listing.isrented
+                                        td.red Rented
+                                    else
+                                        td
+                                            a.tablelink.green(href='/profile?username=#{listing.owner}') Available
+                    else
+                        h5.red No listed copies can be found
 
         .col-sm-9
             br
             div.slide-right
-                h4 Edit Profile
+                h4 Edit Comic
                 form(name="getEdit", action="/comicpage/edit", method="post")
                     button.btn.btn-default.col-sm-2(name= "comicid", value=id) Edit

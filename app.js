@@ -9,9 +9,9 @@ var passport = require('passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var profile = require('./routes/profile');
 var addcomic = require('./routes/addcomic');
 var comicpage = require('./routes/comicpage');
+var profile = require('./routes/profile');
 var homepage = require('./routes/homepage');
 var search = require('./routes/search');
 var writeuserreview = require('./routes/writeuserreview');

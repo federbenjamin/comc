@@ -2,7 +2,7 @@ extends layout
 
 block content
 	.body.center
-		.col-sm-4
+		.col-sm-5
 			h1.title.inline.slide-right 
 				= " " + name
 				br
@@ -28,41 +28,75 @@ block content
 						= " " + description
 					p
 						| Favourite Genres:
-						if nogenre
+						if genres == false
 							= " No favourite genres have been selected"
 						else
 							each genre in genres
 								= " " + genre.genre
+
 			div.slide-right
-				h4 My Comics
-				if (rented)
-					button.btn.btn-default.col-sm-2(disabled= true)
-						= comic
-				else if (!rented)
-					form(action="/message/writeMessage", method="post")
-						input(type="hidden", name="email", value= email)
-						input(type="hidden", name="subject", value= "Rental Request")
-						button.btn.btn-default.col-sm-2(name="renting", value= "yes", disabled= false)
-							= comic
+				h4.listingbox My Comics
+				div.row
+					if listings != false
+						table.table.table-striped.table-bordered.table-hover
+							tr
+								th Title
+								th Author
+								th Availability
+								if authLevel == 3
+									th Delete
+								else
+									th Request Rental
+							each listing in listings
+								tr
+									td
+										a.tablelink(href='/comicpage?id=#{listing.comicid}') #{listing.title}
+									td
+										a.tablelink(href='/comicpage?id=#{listing.comicid}') #{listing.author}
+									if listing.isrented
+										td.red Rented
+									else
+										td
+											a.tablelink.green(href='/profile?username=#{listing.owner}') Available
+									if authLevel == 3
+										if listing.isrented
+											td Cant be deleted until returned
+										else
+											td
+												form(name="deleteListing", action='/profile/deleteListing', method="post")
+													button.btn.btn-default.col-sm-4(type="submit", name="id", value='#{listing._id}') Delete
+									else
+										if listing.isrented
+											td Comic Already Rented
+										else
+											td
+												form(name="requestRental", action=' /message/writeMessage/write', method="post")
+														input(type="hidden", name="reciever", value=email, readonly=true)
+														input(type="hidden", name="subject", value=listing.title, readonly=true)
+														input(type="hidden", name="message", value="Hi, I would like to rent your comic book please!", readonly=true)
+														button.btn.btn-default.col-sm-10(type="submit", name="listingid", value='#{listing._id}') Send Request
+
+					else
+						h5.red You have no comics listed
 		.col-sm-9
 			br
 			div.slide-right
 				h4 Messages
 				a(href="/message")
-					button.btn.btn-default.col-sm-2
+					button.btn.btn-default.col-sm-3
 						= "View Messages"
 				form(name="writeMessage", action="/message/writeMessage", method="post")
-					button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+					button.btn.btn-default.col-sm-3(type="submit", name="email", value= email)
 						= "Write Messages" 
 		.col-sm-9
 			br
 			div.slide-right
 				h4 Reviews
 				form(name="writeReview", action="/readUserReview", method="post")
-					button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+					button.btn.btn-default.col-sm-3(type="submit", name="email", value= email)
 						= "Read Review"
 				form(name="writeReview", action="/writeUserReview", method="post")
-					button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+					button.btn.btn-default.col-sm-3(type="submit", name="email", value= email)
 						= "Write Review"
 		.col-sm-9
 			br

@@ -44,7 +44,8 @@ var UserSchema = mongoose.Schema({
 	  },
 	  location: String,
 	  rating: {
-	  	type: Number, min: 0, max: 7
+	  	type: Number, min: 0, max: 7,
+        default: 0
 	  },
 	  num_ratings: {
 		type: Number,
@@ -78,11 +79,14 @@ passport.deserializeUser(function(user, done){
 passport.use(new FacebookStrategy({
     clientID: fb.appID,
     clientSecret: fb.appSecret,
-    callbackURL: fb.callbackUrl
+    callbackURL: fb.callbackUrl,
+	profileFields: ['emails']
   },
 	function(accessToken, refreshToken, profile, done) {
 		process.nextTick(function() {
     
+		console.log(profile);
+	
 		// find the user in the database based on their facebook id
 		Users.findOne({ 'email' : profile.emails[0].value}, function(err, user) {
  
@@ -96,21 +100,24 @@ passport.use(new FacebookStrategy({
 				return done(null, user); // user found, return that user
 			}
 			else {
-				// if there is no user found with that facebook id, create them
-				var fbuser = new Users({
-					email: profile.emails[0].value // facebook can return multiple emails so we'll take the first
-				});
-	 	 
-				// save our user to the database
-				fbuser.save(function(err) {
-					if (err){
-						res.status(500).send(err);
-						console.log(err);
-						return;
+				Users.count({}, function(err, count) {
+					var authLevel = 2;
+					if (count == 0) {
+						authLevel = 0;
 					}
-	 
-					// if successful, return the new user
-					return done(null, fbuser);
+					// if there is no user found with that facebook id, create them
+						var fbuser = new Users({
+							level: authLevel,
+							displayName: profile.emails[0].value,
+							rating: 0,
+							username: profile.emails[0].value
+						});
+			 
+					// save our user to the database
+					fbuser.save(function(err) {	 
+						// if successful, return the new user
+						return done(null, fbuser);
+					});
 				});
 			} 
       });
@@ -211,25 +218,28 @@ router.post('/login', function(req, res) {
 	});
 });
 
-router.get('/login/facebook', function(req, res) {
+router.get('/login/facebook', 
 	//Send authentication request to facebook
-	passport.authenticate('facebook', {scope: 'email'});
-});
+	passport.authenticate('facebook', {scope: 'email'})
+);
 
-router.get('/login/facebookcallback', function(req, res) {
+router.get('/login/facebookcallback', function(req,res){
 	passport.authenticate('facebook', function (err, user, info){
 		if (err) {
 			res.status(500).send(err);
 			console.log(err);
 			return;
 		}
-		if (!user) {
+		if (user) {
 			//Authentication of the user was successful and user can be logged in
 			var sess = req.session;
-			sess.login = req.body.email;
+			sess.login =  user.username;
+			res.redirect('/homepage');
 		}
-		res.redirect('/');
-	});
+		else{
+			res.redirect('/');
+		}
+	})(req, res);
 });
 router.get('/logout', function(req, res) {
 	//Destroy session and redirect to log in page

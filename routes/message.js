@@ -40,7 +40,7 @@ router.get('/', function(req, res) {
 
 		console.log("messages: " + mess);
 
-		res.render('message', { message: mess, title: "COMC" });
+		res.render('message', { message: mess, title: "COMC", login: req.session.login});
 
 	});
 });
@@ -53,6 +53,7 @@ router.post('/writeMessage', function(req, res) {
 			var message = '\n\n\n\n\n\n\n------------------------' + Date() + '\n\n' + req.body.message;
 			var subject = 'RE:' + req.body.subject
 
+<<<<<<< HEAD
 			if (req.body.renting == 'yes') {
 				rentalRequest = true;
 
@@ -66,6 +67,11 @@ router.post('/writeMessage', function(req, res) {
 		} else {
 			if (req.body.renting == 'yes') {
 				rentalRequest = true;
+=======
+			res.render('writeMessage', { email: req.body.sender, message: message, subject: subject, login: req.session.login });
+		} else {
+			res.render('writeMessage', { email: req.body.email, login: req.session.login});
+>>>>>>> a045628f710bf4b87d8599d3249045d36e9ffdbc
 
 			} else {
 				rentalRequest = false;
@@ -123,15 +129,14 @@ router.post('/read', function(req, res) {
 	
 	Messages.find({ id: req.body.id }, function(err, msg) {
 		Users.find({ username: msg[0].sender }, function(err, user) {
-			Listings.find({ username: req.session.login }, function(err, listings) {
-				
-				res.render('readMessage', { email: user[0].username, 
-											name: user[0].displayName, 
-											image: user[0].image, 
-											msg: msg[0],
-										  });
-			
-			});
+
+			console.log(msg);
+			res.render('readMessage', { email: user[0].username, 
+										name: user[0].displayName, 
+										image: user[0].image, 
+										msg: msg[0],
+										login: req.session.login
+									  });
 		});
 	});
 });

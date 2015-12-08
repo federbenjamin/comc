@@ -52,8 +52,8 @@ router.post('/', function(req, res, next) {
 				}
 				
 				//When user has selected genre
-				if (user.length > 0){ 
-					var genrearray = [];
+				var genrearray = [];
+				if (user.length > 0){
 					for (i = 0; i < user.length; i++){
 						genrearray.push(user[i].genre);
 					}
