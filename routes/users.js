@@ -8,10 +8,7 @@ var session = require('express-session');
 var fb = require('./fb.js');
 
 // To connect to MongoDB's database
-mongoose.connect('mongodb://localhost:27017/', {
-	user: '',
-	pass: ''
-});
+mongoose.connect('mongodb://comcapp:comcapp1@ds051788.mongolab.com:51788/heroku_wct4p3zj')
 
 // Check the status of this connection
 var db = mongoose.connection;
