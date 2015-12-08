@@ -6,23 +6,33 @@ block content
 			h1.title.inline.slide-right
 				= "Reviews for " + comicname
 			ul.slide-right
-				each comic in review
-					div
-						label.control-label.underline
-							= "Reviewer:" + " "
-						span #{comic.poster}
+			ul.slide-right
+				if noreview
+					h5 There are currently no reviews for this comic
+				else
+					each comic in review
+						div
+							label.control-label.underline
+								= "Reviewer:" + " "
+							span #{comic.reviewer}
+							br
+							span 
+								each star in [1,2,3,4,5,6,7]
+									if (star <= comic.rating)
+										span &#9733
+									else
+										span &#9734
+							br
+							span.word-wrap #{comic.comment}
+							br
+							span posted on:
+								| #{comic.date}
+							if (authLevel < 2 || comic.reviewer == currentUser) 
+								form(name="deleteReview", action="/readComicReview/deleteReview", method="post")
+									input(name="comicid", type="hidden", value=comicid)
+									input(type="hidden", name="reviewer", value= comic.reviewer)
+									input(type="hidden", name="timestamp", value= comic.date)
+									input(type="hidden", name="comment", value= comic.comment)
+									input(type="hidden", name="rating", value= comic.rating)
+									button.btn.btn-default.col-sm-offset-10(type="submit", name="user", value= comic.username) Delete Post
 						br
-						span 
-							each star in [1,2,3,4,5,6,7]
-								if (star <= comic.rating)
-									span &#9733
-								else
-									span &#9734
-						br
-						span.word-wrap #{comic.comment}
-						br
-						span posted on:
-							| #{comic.date}
-						if (authLevel < 2) 
-							button.btn.btn-default.col-sm-offset-10(type="submit", name= "comicname", value= comicname) Delete Post
-					br

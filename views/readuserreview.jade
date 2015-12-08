@@ -12,8 +12,7 @@ block content
 					each user in review
 						div
 							label.control-label.underline
-								= "Reviewer: " + user.username
-							span #{user.poster}
+								= "Reviewer: " + user.reviewer
 							br
 							span 
 								each star in [1,2,3,4,5,6,7]
