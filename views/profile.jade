@@ -66,12 +66,15 @@ block content
 												form(name="deleteListing", action='/profile/deleteListing', method="post")
 													button.btn.btn-default.col-sm-4(type="submit", name="id", value='#{listing._id}') Delete
 									else
-										td
-											form(name="requestRental", action=' /message/writeMessage/write', method="post")
-													input(type="hidden", name="reciever", value=email, readonly=true)
-													input(type="hidden", name="subject", value=listing.title, readonly=true)
-													input(type="hidden", name="message", value="Hi, I would like to rent your comic book please!", readonly=true)
-													button.btn.btn-default.col-sm-4(type="submit", name="listingid", value='#{listing._id}') Send Request
+										if listing.isrented
+											td Comic Already Rented
+										else
+											td
+												form(name="requestRental", action=' /message/writeMessage/write', method="post")
+														input(type="hidden", name="reciever", value=email, readonly=true)
+														input(type="hidden", name="subject", value=listing.title, readonly=true)
+														input(type="hidden", name="message", value="Hi, I would like to rent your comic book please!", readonly=true)
+														button.btn.btn-default.col-sm-10(type="submit", name="listingid", value='#{listing._id}') Send Request
 
 					else
 						h5.red You have no comics listed
