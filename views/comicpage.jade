@@ -2,7 +2,7 @@ extends layout
 
 block content
     .body.center
-        .col-sm-4
+        .col-sm-5
             if exists
                 h2.green Comic Already Exists
                 br
@@ -64,7 +64,7 @@ block content
                         table.table.table-striped.table-bordered.table-hover
                             tr
                                 th Owner
-                                th Available
+                                th Availability
                             each listing in comicowners
                                 tr
                                     td

@@ -22,6 +22,8 @@ var upload = multer({ storage: storage });
 
 var Users = mongoose.model('Users');
 var Genres = mongoose.model('Genres');
+var Listings = mongoose.model('Listings');
+var Comics = mongoose.model('Comics');
 
 router.get('/', function(req, res, next) {
 
@@ -61,34 +63,36 @@ router.get('/', function(req, res, next) {
 			  console.log(err);
 			  return;
 			}
-			//No genres were selected by user
-			if (!genreusers.length){
-				res.render('profile', {
-						  image: user[0].image,
-						  email: user[0].username, 
-						  name: user[0].displayName, 
-						  description: user[0].description,
-						  authLevel: access,
-						  rating: rating,
-						  profileLevel: user[0].level,
-						  login: req.session.login,
-						  nogenre:true
-				});
-			}
-			//Genres were selected by the user
-			else{
-				res.render('profile', {
-						  image: user[0].image,
-						  email: user[0].username, 
-						  name: user[0].displayName, 
-						  description: user[0].description,
-						  authLevel: access,
-						  rating: rating,
-						  profileLevel: user[0].level,
-						  login: req.session.login,
-						  genres:genreusers
-				});
-			}
+      Listings.find({owner: user[0].username}, function(err, listings) {
+        var query = Comics.find();
+        for (i = 0; i < listings.length; i++) {
+          query.or( [{_id: listings[i].comicid}] );
+        }
+        query.exec( function(err, comicdata) {
+          for (j = 0; j < listings.length; j++) {
+            var targetid = listings[j].comicid;
+            for (k = 0; k < comicdata.length; k++) {
+              if (comicdata[k]._id == targetid) {
+                listings[j].title = comicdata[k].title;
+                listings[j].author = comicdata[k].author;
+                break;
+              }
+            }
+          }
+    			res.render('profile', {
+    					  image: user[0].image,
+    					  email: user[0].username,
+    					  name: user[0].displayName,
+    					  description: user[0].description,
+    					  authLevel: access,
+    					  rating: rating,
+    					  profileLevel: user[0].level,
+    					  login: req.session.login,
+    					  genres:genreusers,
+                listings: listings
+    			});
+        });
+      });
 		});
       });
   

@@ -28,38 +28,54 @@ block content
 						= " " + description
 					p
 						| Favourite Genres:
-						if nogenre
+						if genres == false
 							= " No favourite genres have been selected"
 						else
 							each genre in genres
 								= " " + genre.genre
+
 			div.slide-right
-				h4 My Comics
-				if (rented)
-					button.btn.btn-default.col-sm-2(disabled= true)
-						= comic
-				else if (!rented)
-					button.btn.btn-default.col-sm-2(disabled= false)
-						= comic
+				h4.listingbox My Comics
+				div.row
+					if listings != false
+						table.table.table-striped.table-bordered.table-hover
+							tr
+								th Title
+								th Author
+								th Availability
+							each listing in listings
+								tr
+									td
+										a.tablelink(href='/comicpage?id=#{listing.comicid}') #{listing.title}
+									td
+										a.tablelink(href='/comicpage?id=#{listing.comicid}') #{listing.author}
+									if listing.isrented
+										td.red Rented
+									else
+										td
+											a.tablelink.green(href='/profile?username=#{listing.owner}') Available
+					else
+						h5.red You have no comics listed
+
 		.col-sm-9
 			br
 			div.slide-right
 				h4 Messages
 				a(href="/message")
-					button.btn.btn-default.col-sm-2
+					button.btn.btn-default.col-sm-3
 						= "View Messages"
 				form(name="writeMessage", action="/message/writeMessage", method="post")
-					button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+					button.btn.btn-default.col-sm-3(type="submit", name="email", value= email)
 						= "Write Messages" 
 		.col-sm-9
 			br
 			div.slide-right
 				h4 Reviews
 				form(name="writeReview", action="/readUserReview", method="post")
-					button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+					button.btn.btn-default.col-sm-3(type="submit", name="email", value= email)
 						= "Read Review"
 				form(name="writeReview", action="/writeUserReview", method="post")
-					button.btn.btn-default.col-sm-2(type="submit", name="email", value= email)
+					button.btn.btn-default.col-sm-3(type="submit", name="email", value= email)
 						= "Write Review"
 		.col-sm-9
 			br
