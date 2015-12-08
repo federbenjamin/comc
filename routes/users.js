@@ -44,7 +44,8 @@ var UserSchema = mongoose.Schema({
 	  },
 	  location: String,
 	  rating: {
-	  	type: Number, min: 0, max: 7
+	  	type: Number, min: 0, max: 7,
+        default: 0
 	  },
 	  num_ratings: {
 		type: Number,
