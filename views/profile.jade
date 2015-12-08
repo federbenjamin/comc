@@ -2,7 +2,7 @@ extends layout
 
 block content
 	.body.center
-		.col-sm-4
+		.col-sm-5
 			h1.title.inline.slide-right 
 				= " " + name
 				br
@@ -45,6 +45,8 @@ block content
 								th Availability
 								if authLevel == 3
 									th Delete
+								else
+									th Request Rental
 							each listing in listings
 								tr
 									td
@@ -63,6 +65,14 @@ block content
 											td
 												form(name="deleteListing", action='/profile/deleteListing', method="post")
 													button.btn.btn-default.col-sm-4(type="submit", name="id", value='#{listing._id}') Delete
+									else
+										td
+											form(name="requestRental", action=' /message/writeMessage/write', method="post")
+													input(type="hidden", name="reciever", value=email, readonly=true)
+													input(type="hidden", name="subject", value=listing.title, readonly=true)
+													input(type="hidden", name="message", value="Hi, I would like to rent your comic book please!", readonly=true)
+													button.btn.btn-default.col-sm-4(type="submit", name="listingid", value='#{listing._id}') Send Request
+
 					else
 						h5.red You have no comics listed
 

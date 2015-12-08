@@ -44,11 +44,11 @@ block content
                 h4 Reviews
                 form(name="readReview", action="/readComicReview", method="post")
                     input(name="comicid", type="hidden", value=id)
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
+                    button.btn.btn-default.col-sm-3(type="submit", name="comicname", value= comicname)
                         = "Read Review"
                 form(name="writeReview", action="/writeComicReview", method="post")
                     input(name="comicid", type="hidden", value=id)
-                    button.btn.btn-default.col-sm-2(type="submit", name="comicname", value= comicname)
+                    button.btn.btn-default.col-sm-3(type="submit", name="comicname", value= comicname)
                         = "Write Review"
 
         .col-sm-9
@@ -56,7 +56,7 @@ block content
             div.slide-right
                 h4 Listings
                 form(name="addListing", action="/comicpage/addListing", method="post")
-                    button.btn.btn-default.col-sm-4(type="submit", name="comicid", value=id)
+                    button.btn.btn-default.col-sm-6(type="submit", name="comicid", value=id)
                         = "Add Comic to your Listings"
 
                 div.row.listingbox
@@ -80,6 +80,6 @@ block content
         .col-sm-9
             br
             div.slide-right
-                h4 Edit Profile
+                h4 Edit Comic
                 form(name="getEdit", action="/comicpage/edit", method="post")
                     button.btn.btn-default.col-sm-2(name= "comicid", value=id) Edit
