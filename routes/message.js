@@ -170,18 +170,15 @@ router.post('/rent', function(req, res) {
 
 		}
 
+		listings.save(function(err) {
+		    if (err) {
+		    	res.status(500).send(err);
+		      	console.log(err);
+		      	return;
+		    }
+		    res.redirect('/message');
+  		});
 	});
-
-	listings.save(function(err) {
-	    if (err) {
-	    	res.status(500).send(err);
-	      	console.log(err);
-	      	return;
-	    }
-
-  	});
-
-	res.redirect('/message');
 
 })
 
