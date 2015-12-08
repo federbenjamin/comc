@@ -31,7 +31,7 @@ var MessageSchema = mongoose.Schema({
 
 var Messages = mongoose.model('Messages', MessageSchema);
 var Users = mongoose.model('Users');
-var ComicListings = mongoose.model('Comic_Listings');
+var ComicListings = mongoose.model('Listings');
 
 // Get message page
 router.get('/', function(req, res) {
@@ -53,7 +53,6 @@ router.post('/writeMessage', function(req, res) {
 			var message = '\n\n\n\n\n\n\n------------------------' + Date() + '\n\n' + req.body.message;
 			var subject = 'RE:' + req.body.subject
 
-<<<<<<< HEAD
 			if (req.body.renting == 'yes') {
 				rentalRequest = true;
 
@@ -67,11 +66,6 @@ router.post('/writeMessage', function(req, res) {
 		} else {
 			if (req.body.renting == 'yes') {
 				rentalRequest = true;
-=======
-			res.render('writeMessage', { email: req.body.sender, message: message, subject: subject, login: req.session.login });
-		} else {
-			res.render('writeMessage', { email: req.body.email, login: req.session.login});
->>>>>>> a045628f710bf4b87d8599d3249045d36e9ffdbc
 
 			} else {
 				rentalRequest = false;
@@ -161,18 +155,18 @@ router.post('/delete', function(req, res) {
 });
 
 router.post('/rent', function(req, res) {
-	ComicListings.find({ owner: req.body.receiver }, function(err, function) {
+	ComicListings.find({ owner: req.body.receiver }, function(err, listing) {
 
 		if (req.body.renting == 'yes') {
-			Comic_Listings.is_rented = true;
-			Comic_Listings.renter = req.body.renter;
+			listings.is_rented = true;
+			listings.renter = req.body.renter;
 
 		} else if (req.body.renting == 'no') {
 
 
 		} else if (req.body.returned == 'yes') {
-			Comic_Listings.is_rented = false;
-			Comic_Listings.renter = '';
+			listings.is_rented = false;
+			listings.renter = '';
 
 		}
 
