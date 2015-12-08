@@ -197,3 +197,15 @@ table#messageList {
 .green {
   color: green;
 }
+
+.red {
+  color: red;
+}
+
+.listingbox {
+  padding-top: 50px;
+}
+
+.underline {
+  text-decoration: underline;
+}

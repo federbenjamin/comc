@@ -53,7 +53,7 @@ router.post('/addedcomic', function(req, res) {
 	else {
         Comics.find({$and: [{title: req.body.comictitle}, {author: req.body.comicauthor}] }, function(err, comic) {
             if (comic[0]) {
-                res.redirect('/comicpage?id=' + comic[0]._id.valueOf() + '&exists=true');
+                res.redirect('/comicpage?id=' + comic[0]._id.valueOf() + '&exists=1');
             } else {
                     
                 var desc = (req.body.comicdescription ? req.body.comicdescription : "No Description Available");
