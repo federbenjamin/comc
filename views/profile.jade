@@ -71,9 +71,10 @@ block content
 										else
 											td
 												form(name="requestRental", action=' /message/writeMessage/write', method="post")
-														input(type="hidden", name="reciever", value=email, readonly=true)
+														input(type="hidden", name="user", value=email, readonly=true)
 														input(type="hidden", name="subject", value=listing.title, readonly=true)
 														input(type="hidden", name="message", value="Hi, I would like to rent your comic book please!", readonly=true)
+														input(type="hidden", name="rentalRequest", value="true", readonly="true")
 														button.btn.btn-default.col-sm-10(type="submit", name="listingid", value='#{listing._id}') Send Request
 
 					else

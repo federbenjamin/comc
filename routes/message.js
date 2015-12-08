@@ -155,7 +155,7 @@ router.post('/delete', function(req, res) {
 });
 
 router.post('/rent', function(req, res) {
-	ComicListings.find({ owner: req.body.receiver }, function(err, listing) {
+	ComicListings.find({ owner: req.body.receiver }, function(err, listings) {
 
 		if (req.body.renting == 'yes') {
 			listings.is_rented = true;
@@ -171,6 +171,8 @@ router.post('/rent', function(req, res) {
 		}
 
 	});
+
+	res.redirect('/message');
 
 })
 
