@@ -1,3 +1,5 @@
+Comc can be accessed via http://comc.herokuapp.com/
+
 To run the application:
 - Launch MongoDB with the mongod command
 - Run the following commands to launch the application:
