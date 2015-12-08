@@ -22,7 +22,7 @@ var Users = mongoose.model('Users');
 //rentals are created in addcomic when a comic is added
 
 router.get('/editRental', function(req, res) {
-    res.render('editRental', { comicid: req.body.comicid });
+    res.render('editRental', { comicid: req.body.comicid, login: req.session.login});
 });
 
 router.post('/updateRental', function(req, res) {
@@ -51,12 +51,14 @@ router.post('/findComic', function(req, res) {
     Rentals.find({comictitle: req.body.comicname }, function(err, rental) {
         if (rental[0].is_rented == false) {
             res.render('findComic', {
-                renter: rental[0].renter
+                renter: rental[0].renter,
+				login: req.session.login
             });
         }
         else {
             res.render('findComic', {
-                rented: true
+                rented: true,
+				login: req.session.login
             });
         }
     });

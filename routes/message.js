@@ -35,7 +35,7 @@ router.get('/', function(req, res) {
 
 		console.log("messages: " + mess);
 
-		res.render('message', { message: mess, title: "COMC" });
+		res.render('message', { message: mess, title: "COMC", login: req.session.login});
 
 	});
 });
@@ -48,9 +48,9 @@ router.post('/writeMessage', function(req, res) {
 			var message = '\n\n\n\n\n\n\n------------------------' + Date() + '\n\n' + req.body.message;
 			var subject = 'RE:' + req.body.subject
 
-			res.render('writeMessage', { email: req.body.sender, message: message, subject: subject });
+			res.render('writeMessage', { email: req.body.sender, message: message, subject: subject, login: req.session.login });
 		} else {
-			res.render('writeMessage', { email: req.body.email});
+			res.render('writeMessage', { email: req.body.email, login: req.session.login});
 
 		}
 
@@ -98,7 +98,8 @@ router.post('/read', function(req, res) {
 			res.render('readMessage', { email: user[0].username, 
 										name: user[0].displayName, 
 										image: user[0].image, 
-										msg: msg[0]
+										msg: msg[0],
+										login: req.session.login
 									  });
 
 		});
