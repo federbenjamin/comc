@@ -43,6 +43,8 @@ block content
 								th Title
 								th Author
 								th Availability
+								if authLevel == 3
+									th Delete
 							each listing in listings
 								tr
 									td
@@ -54,6 +56,13 @@ block content
 									else
 										td
 											a.tablelink.green(href='/profile?username=#{listing.owner}') Available
+									if authLevel == 3
+										if listing.isrented
+											td Cant be deleted until returned
+										else
+											td
+												form(name="deleteListing", action='/profile/deleteListing', method="post")
+													button.btn.btn-default.col-sm-4(type="submit", name="id", value='#{listing._id}') Delete
 					else
 						h5.red You have no comics listed
 

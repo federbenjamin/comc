@@ -104,6 +104,21 @@ router.get('/', function(req, res, next) {
 
 });
 
+router.post('/deleteListing', function(req, res) {
+  if (typeof req.session.login !== 'undefined') {
+    Listings.remove({_id: req.body.id}, function(err) {
+      if (err) {
+        res.status(500).send(err);
+        console.log(err);
+        return;
+      }
+      res.redirect('/profile?username=' + req.session.login);
+    });
+  } else {
+    res.redirect('/');
+  }
+});
+
 router.post('/edit', function(req, res, next) {
 
   if (typeof req.session.login !== 'undefined'){
