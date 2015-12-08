@@ -22,11 +22,16 @@ var MessageSchema = mongoose.Schema({
 	date: {
 		type: Date,
 		default: Date()
+	},
+	rentalRequest: {
+		type: Boolean,
+		default: false
 	}
 });
 
 var Messages = mongoose.model('Messages', MessageSchema);
 var Users = mongoose.model('Users');
+var ComicListings = mongoose.model('Comic_Listings');
 
 // Get message page
 router.get('/', function(req, res) {
@@ -41,19 +46,36 @@ router.get('/', function(req, res) {
 });
 
 router.post('/writeMessage', function(req, res) {
+	console.log((req.body));
+
 	if (req.session.login !== undefined) {
 		if (req.body.id !== undefined) {
-
-			console.log(req.body);
 			var message = '\n\n\n\n\n\n\n------------------------' + Date() + '\n\n' + req.body.message;
 			var subject = 'RE:' + req.body.subject
 
-			res.render('writeMessage', { email: req.body.sender, message: message, subject: subject });
+			if (req.body.renting == 'yes') {
+				rentalRequest = true;
+
+			} else {
+				rentalRequest = false;
+				
+			}
+
+			res.render('writeMessage', { email: req.body.sender, message: message, subject: subject, rentRequest: rentalRequest });
+
 		} else {
-			res.render('writeMessage', { email: req.body.email});
+			if (req.body.renting == 'yes') {
+				rentalRequest = true;
+
+			} else {
+				rentalRequest = false;
+
+			}
+			console.log("rent? " + rentalRequest);
+
+			res.render('writeMessage', { email: req.body.email, subject: req.body.subject, rentRequest: "true" });
 
 		}
-
 	} else {
 		res.redirect('/');
 
@@ -63,6 +85,13 @@ router.post('/writeMessage', function(req, res) {
 
 // Write message
 router.post('/writeMessage/write', function(req, res) {
+	console.log("rent: " + req.body.rentalRequest);
+
+	var rentalRequest = false;
+	if (req.body.rentalRequest == 'true') {
+		rentalRequest = true;
+
+	}
 
 	var id = Math.floor(Math.random() * (9999999999 - 0)) + 0;
 	var message = new Messages({
@@ -70,7 +99,8 @@ router.post('/writeMessage/write', function(req, res) {
 				receiver: req.body.user,
 				sender: req.session.login,
 				subject: req.body.subject,
-				message: req.body.message
+				message: req.body.message,
+				rentalRequest: rentalRequest
 	});
 
 	message.save(function(err) {
@@ -93,24 +123,21 @@ router.post('/read', function(req, res) {
 	
 	Messages.find({ id: req.body.id }, function(err, msg) {
 		Users.find({ username: msg[0].sender }, function(err, user) {
-
-			console.log(msg);
-			res.render('readMessage', { email: user[0].username, 
-										name: user[0].displayName, 
-										image: user[0].image, 
-										msg: msg[0]
-									  });
-
+			Listings.find({ username: req.session.login }, function(err, listings) {
+				
+				res.render('readMessage', { email: user[0].username, 
+											name: user[0].displayName, 
+											image: user[0].image, 
+											msg: msg[0],
+										  });
+			
+			});
 		});
-
 	});
-
 });
 
 // Delete message
 router.post('/delete', function(req, res) {
-	console.log("ID: " + req.body.id);
-
 	Messages.find({ id: req.body.id }, function(err, msg) {
 		console.log(msg);
 
@@ -127,5 +154,25 @@ router.post('/delete', function(req, res) {
 	var back=req.header('Referer') || '/';
 	res.redirect(back);
 });
+
+router.post('/rent', function(req, res) {
+	ComicListings.find({ owner: req.body.receiver }, function(err, function) {
+
+		if (req.body.renting == 'yes') {
+			Comic_Listings.is_rented = true;
+			Comic_Listings.renter = req.body.renter;
+
+		} else if (req.body.renting == 'no') {
+
+
+		} else if (req.body.returned == 'yes') {
+			Comic_Listings.is_rented = false;
+			Comic_Listings.renter = '';
+
+		}
+
+	});
+
+})
 
 module.exports = router;

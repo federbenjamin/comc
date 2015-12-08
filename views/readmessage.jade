@@ -26,3 +26,18 @@ block content
 					input(type="hidden", value=msg.message, name="message")
 					.col-sm-offset-10
 						button.btn.btn-default(type="submit") Reply
+				br
+				if (msg.rentalRequest)
+					label.label-control Accept Request?
+					form(name="rentalInfo", action="/message/rent", method="post")
+						input(type="hidden", name="owner", value=msg.receiver)
+						input(type="hidden", value=msg.sender, name="renter")
+						//
+							input(type="hidden", value=listings.comicid, name="comicid")
+							input(type="hidden", value=listings.username, name="user")
+						button.btn.btn-default(type="submit", name="renting", value="yes") Yes
+						button.btn.btn-default(type="submit", name="renting", value="no") No
+						br
+						br
+						label.label-control Comic Returned?           
+							button.btn.btn-default(type="submit", name="returned", value="yes") Yes

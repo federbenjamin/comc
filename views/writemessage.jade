@@ -6,6 +6,7 @@ block content
 			h1.title.slide-right
 				= "Send Message"
 			form(name="writeMessage", action="/message/writeMessage/write", method="post")
+				input(type="hidden", name="rentalRequest", value= rentRequest)
 				label.control-label User: 
 				input.form-control(type="text", name="user", value= email)
 				br
@@ -17,5 +18,3 @@ block content
 				br
 				br
 				input.btn.btn-default.col-sm-offset-10(type="submit" value="Submit")
-				p
-					msg.subject

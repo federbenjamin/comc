@@ -39,8 +39,11 @@ block content
 					button.btn.btn-default.col-sm-2(disabled= true)
 						= comic
 				else if (!rented)
-					button.btn.btn-default.col-sm-2(disabled= false)
-						= comic
+					form(action="/message/writeMessage", method="post")
+						input(type="hidden", name="email", value= email)
+						input(type="hidden", name="subject", value= "Rental Request")
+						button.btn.btn-default.col-sm-2(name="renting", value= "yes", disabled= false)
+							= comic
 		.col-sm-9
 			br
 			div.slide-right
