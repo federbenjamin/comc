@@ -8,7 +8,8 @@ Samuel Ko - c2kosamu
 Benjamin Feder - g5federb
 Caitlin Guse - c3guseca
 
-Comc is a space where individuals can share comic books with one another. 
+
+Comc is a space where individuals can share comic books with one another. Comc can be accessed via 'http://comc.herokuapp.com/'.
 
 Users can create profiles and choose their favourite genres of comics via the signup page. Users are also able to login through the index page using their credentials. Users are also able to log in through Facebook from the index page. Once users are logged in, they are able to upload any number of comic books to their account through the add comic page. The navigation bar at the top of the window, allows users to quickly add comics, view their profile, or logout as well.
 
