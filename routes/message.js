@@ -158,19 +158,28 @@ router.post('/rent', function(req, res) {
 	ComicListings.find({ owner: req.body.receiver }, function(err, listings) {
 
 		if (req.body.renting == 'yes') {
-			listings.is_rented = true;
+			listings.isrented = true;
 			listings.renter = req.body.renter;
 
 		} else if (req.body.renting == 'no') {
 
 
 		} else if (req.body.returned == 'yes') {
-			listings.is_rented = false;
+			listings.isrented = false;
 			listings.renter = '';
 
 		}
 
 	});
+
+	listings.save(function(err) {
+	    if (err) {
+	    	res.status(500).send(err);
+	      	console.log(err);
+	      	return;
+	    }
+
+  	});
 
 	res.redirect('/message');
 
