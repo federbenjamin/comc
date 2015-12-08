@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
+var toobusy = require('toobusy-js');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -38,6 +39,14 @@ app.use(session({
   secret: 'keyboard cat',
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
+
+app.use(function(req, res, next) {
+  if (toobusy()) {
+    res.send(503, "Too many requests at once");
+  } else {
+    next();
+  }
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
