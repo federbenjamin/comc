@@ -1,2 +1,3 @@
 # comc
-Comc - CSC309 Assignment 5
+
+A comic book sharing website made using node.js
